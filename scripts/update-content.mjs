@@ -47,6 +47,7 @@ function parseFeed(xml, feed) {
   return blocks.map((b) => {
     const link = decode(tag(b, "link")) || b.match(/<link[^>]*rel="alternate"[^>]*href="([^"]+)"/i)?.[1] || b.match(/<link[^>]*href="([^"]+)"/i)?.[1];
     const date = tag(b, "pubDate") || tag(b, "published") || tag(b, "updated") || tag(b, "dc:date");
+    const body = decode(tag(b, "content:encoded") || tag(b, "content") || tag(b, "description") || "");
     return {
       title: decode(tag(b, "title")),
       url: link?.trim(),
@@ -55,11 +56,15 @@ function parseFeed(xml, feed) {
       source: feed.name,
       tag: feed.tag,
       weight: feed.weight ?? 1,
+      length: body.length,
     };
   }).filter((x) => x.title && x.url?.startsWith("http"));
 }
 
 const KEYWORDS = /\b(agent|agents|eval|evals|rag|retrieval|llm|prompt|mcp|claude|inference|embedding|fine-tun|distributed|scal|database|architecture|consisten|queue|cache|latency|reliab|postmortem|migration|system design)/i;
+
+// News digests, podcasts and link lists are rarely worth a focused hour.
+const ROUNDUP = /\b(podcast|episode|roundup|round-up|links|this week|weekly|digest|issue #?\d+|#\d+|sponsor|giveaway|announcing|hiring)\b/i;
 
 function score(item, phaseTag) {
   const ageDays = (Date.now() - Date.parse(item.published)) / 86400000;
@@ -67,10 +72,11 @@ function score(item, phaseTag) {
   if (item.tag === phaseTag || (phaseTag === "fde" && item.tag === "ai")) s *= 1.3;
   if (KEYWORDS.test(item.title + " " + item.summary)) s *= 1.4;
   if (item.title.length < 20) s *= 0.7; // short link posts are rarely deep reads
+  if (ROUNDUP.test(item.title)) s *= 0.4;
   return s;
 }
 
-async function askClaude(candidates, phase, week) {
+async function askClaude(candidates, phase, week, kind) {
   if (!process.env.ANTHROPIC_API_KEY) return null;
   const { default: Anthropic } = await import("@anthropic-ai/sdk");
   const { zodOutputFormat } = await import("@anthropic-ai/sdk/helpers/zod");
@@ -84,7 +90,7 @@ async function askClaude(candidates, phase, week) {
     output_config: { effort: "low", format: zodOutputFormat(Pick) },
     messages: [{
       role: "user",
-      content: `I'm a software engineer with 4+ years of experience studying to become a forward deployed engineer. This week I'm in the "${phase.title}" phase, studying "${week.title}". Pick the ONE article below that is most worth an hour of my time today: substantive, practical, not news or a link roundup. Prefer pieces relevant to my current phase. Return its index and a two-sentence "why read this" addressed to me.\n\n${list}`,
+      content: `I'm a software engineer with 4+ years of experience studying to become a forward deployed engineer. This week I'm in the "${phase.title}" phase, studying "${week.title}". Pick the ONE ${kind} below that is most worth an hour of my time today: substantive, practical, not news or a link roundup. Prefer pieces relevant to my current phase. Return its index and a two-sentence "why read this" addressed to me.\n\n${list}`,
     }],
   });
   const pick = response.parsed_output;
@@ -99,27 +105,30 @@ async function isReachable(url) {
   } catch { return false; }
 }
 
-async function pickRead(roadmap) {
-  const reads = await readJson("reads.json", []);
+// One pick a day from a list of feeds. Used for the daily read (blogs) and the Substack of the day.
+async function pickDaily(roadmap, { label, kind, picksFile, feedsFile, seedsFile, windowDays = 21, minLength = 0 }) {
+  const reads = await readJson(picksFile, []);
   if (reads.some((r) => r.date === today)) {
-    console.log(`read: already picked for ${today}`);
+    console.log(`${label}: already picked for ${today}`);
     return;
   }
-  const feeds = await readJson("feeds.json", []);
-  const seeds = await readJson("seed-reads.json", []);
+  const feeds = await readJson(feedsFile, []);
+  const seeds = seedsFile ? await readJson(seedsFile, []) : [];
   const seen = new Set(reads.map((r) => r.url));
   const { phase, week } = currentPhase(roadmap);
 
   const results = await Promise.allSettled(feeds.map(async (f) => parseFeed(await fetchText(f.url), f)));
-  results.forEach((r, i) => r.status === "rejected" && console.warn(`feed failed: ${feeds[i].name}: ${r.reason.message}`));
+  results.forEach((r, i) => r.status === "rejected" && console.warn(`${label} feed failed: ${feeds[i].name}: ${r.reason.message}`));
+  results.forEach((r, i) => r.status === "fulfilled" && !r.value.length && console.warn(`${label} feed empty: ${feeds[i].name}`));
   const fresh = results.flatMap((r) => (r.status === "fulfilled" ? r.value : []))
-    .filter((x) => x.published && !seen.has(x.url) && Date.now() - Date.parse(x.published) < 21 * 86400000)
+    // minLength skips teaser-only items, which on Substack usually means a paywalled post.
+    .filter((x) => x.published && !seen.has(x.url) && x.length >= minLength && Date.now() - Date.parse(x.published) < windowDays * 86400000)
     .map((x) => ({ ...x, score: score(x, phase.tag) }))
     .sort((a, b) => b.score - a.score);
 
   let pick = null;
   if (fresh.length) {
-    try { pick = await askClaude(fresh.slice(0, 15), phase, week); } catch (e) { console.warn(`claude pick failed: ${e.message}`); }
+    try { pick = await askClaude(fresh.slice(0, 15), phase, week, kind); } catch (e) { console.warn(`claude pick failed: ${e.message}`); }
     pick ??= { ...fresh[0], why: `Top-ranked new post from ${fresh[0].source} this week.`, pickedBy: "score" };
   }
   if (!pick) {
@@ -131,12 +140,12 @@ async function pickRead(roadmap) {
       console.warn(`seed unreachable, skipping: ${s.url}`);
     }
   }
-  if (!pick) return console.warn("read: nothing to pick today");
+  if (!pick) return console.warn(`${label}: nothing to pick today`);
 
   const { title, url, source, tag: t, why, pickedBy } = pick;
   reads.unshift({ date: today, title, url, source, tag: t, why, pickedBy });
-  await writeJson("reads.json", reads);
-  console.log(`read: ${title} (${source}, ${pickedBy})`);
+  await writeJson(picksFile, reads);
+  console.log(`${label}: ${title} (${source}, ${pickedBy})`);
 }
 
 // ---------- Claude changelog ----------
@@ -177,5 +186,6 @@ async function updateChangelog() {
 }
 
 const roadmap = await readJson("roadmap.json");
-await pickRead(roadmap);
+await pickDaily(roadmap, { label: "read", kind: "article", picksFile: "reads.json", feedsFile: "feeds.json", seedsFile: "seed-reads.json" });
+await pickDaily(roadmap, { label: "substack", kind: "Substack post", picksFile: "substack-reads.json", feedsFile: "substacks.json", windowDays: 30, minLength: 3000 });
 await updateChangelog();

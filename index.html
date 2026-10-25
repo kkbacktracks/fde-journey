@@ -4,23 +4,30 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>FDE Journey</title>
-  <meta name="description" content="One hour a day toward forward deployed engineer: roadmap, challenges, daily reads and the Claude changelog.">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%232f6fed'/><path d='M9 22l5-12 4 8 3-5 3 9' stroke='white' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+  <meta name="description" content="One hour a day toward forward deployed engineer: roadmap, challenges, daily reads, a Substack pick and the Claude changelog.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%2317150f'/><path d='M7 22h4l3-9 4 13 3-8h4' stroke='%23ff6a2b' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles.css">
+  <script>try { const t = localStorage.getItem("fde-theme"); if (t) document.documentElement.dataset.theme = t; } catch {}</script>
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="#today"><span class="logo"></span>FDE Journey</a>
-    <nav id="nav">
-      <a href="#today">Today</a>
-      <a href="#roadmap">Roadmap</a>
-      <a href="#challenges">Challenges</a>
-      <a href="#log">Log</a>
-      <a href="#reads">Reads</a>
-      <a href="#changelog">Claude changelog</a>
-    </nav>
+    <div class="topbar-inner">
+      <a class="brand" href="#today"><span class="brand-mark" aria-hidden="true"></span><span>FDE <em>Journey</em></span></a>
+      <nav id="nav" aria-label="Sections">
+        <a href="#today">Today</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#challenges">Challenges</a>
+        <a href="#log">Log</a>
+        <a href="#reads">Reads</a>
+        <a href="#changelog">Claude</a>
+      </nav>
+      <button class="theme-toggle" id="theme" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z" fill="currentColor"/></svg>
+      </button>
+    </div>
   </header>
 
   <main id="app" aria-live="polite"><p class="muted">Loading…</p></main>
@@ -29,6 +36,8 @@
     <span>Progress is saved in this browser.</span>
     <button class="link" id="export">Export backup</button>
     <label class="link">Import backup<input type="file" id="import" accept="application/json" hidden></label>
+    <span class="spacer"></span>
+    <a href="https://github.com/kkbacktracks/fde-journey" target="_blank" rel="noopener">Source</a>
   </footer>
 
   <script src="assets/app.js" type="module"></script>
