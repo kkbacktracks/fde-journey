@@ -12,7 +12,7 @@ const readJson = async (name, fallback) => {
 const writeJson = (name, value) => writeFile(new URL(name, DATA), JSON.stringify(value, null, 2) + "\n");
 
 async function fetchText(url, ms = 15000) {
-  const res = await fetch(url, { signal: AbortSignal.timeout(ms), headers: { "user-agent": "fde-journey-site/1.0" } });
+  const res = await fetch(url, { signal: AbortSignal.timeout(ms), headers: { "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36", accept: "application/rss+xml, application/xml;q=0.9, */*;q=0.8" } });
   if (!res.ok) throw new Error(`${res.status} ${url}`);
   return res.text();
 }
@@ -64,7 +64,7 @@ function parseFeed(xml, feed) {
 const KEYWORDS = /\b(agent|agents|eval|evals|rag|retrieval|llm|prompt|mcp|claude|inference|embedding|fine-tun|distributed|scal|database|architecture|consisten|queue|cache|latency|reliab|postmortem|migration|system design)/i;
 
 // News digests, podcasts and link lists are rarely worth a focused hour.
-const ROUNDUP = /\b(podcast|episode|roundup|round-up|links|this week|weekly|digest|issue #?\d+|#\d+|sponsor|giveaway|announcing|hiring)\b/i;
+const ROUNDUP = /\b(podcast|episode|roundup|round-up|links|this week|weekly|digest|issue #?\d+|#\d+|ep\d+|sponsor|giveaway|announcing|hiring)\b/i;
 
 function score(item, phaseTag) {
   const ageDays = (Date.now() - Date.parse(item.published)) / 86400000;
