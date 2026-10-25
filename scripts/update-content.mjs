@@ -3,7 +3,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 
 const DATA = new URL("../data/", import.meta.url);
-const TZ = process.env.SITE_TZ || "Asia/Kolkata";
+const TZ = process.env.SITE_TZ || "America/Los_Angeles";
 const today = new Intl.DateTimeFormat("en-CA", { timeZone: TZ }).format(new Date());
 
 const readJson = async (name, fallback) => {

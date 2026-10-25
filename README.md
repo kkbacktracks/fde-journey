@@ -25,7 +25,7 @@ Progress (check-ins, ticks, challenge links) is stored in your browser. Use **Ex
 
 ## Daily job
 
-`.github/workflows/daily-content.yml` runs `scripts/update-content.mjs` at 06:00 IST. It:
+`.github/workflows/daily-content.yml` runs `scripts/update-content.mjs` at 06:00 Pacific (07:00 during daylight saving). It:
 
 1. Pulls the feeds in `feeds.json`, keeps posts from the last 3 weeks you haven't seen, and ranks them by source weight, recency, topic keywords and fit with your current roadmap phase.
 2. If the `ANTHROPIC_API_KEY` secret is set, asks Claude (Opus 5.5, low effort) to choose the best of the top 15 and write a two-line "why read this". Otherwise it takes the top-ranked post.
@@ -33,7 +33,7 @@ Progress (check-ins, ticks, challenge links) is stored in your browser. Use **Ex
 4. Refreshes `changelog.json` from the Claude Code CHANGELOG and the Claude Platform release notes.
 5. Commits and triggers a deploy.
 
-Change the time zone with a repository variable `SITE_TZ` (default `Asia/Kolkata`).
+Change the time zone with a repository variable `SITE_TZ` (default `America/Los_Angeles`).
 
 ## Setup
 

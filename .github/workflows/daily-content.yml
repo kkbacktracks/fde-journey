@@ -2,7 +2,7 @@ name: Daily content
 
 on:
   schedule:
-    - cron: "30 0 * * *" # 06:00 in India, before the day's study hour
+    - cron: "0 14 * * *" # 06:00 PST / 07:00 PDT in Seattle, before the day's study hour
   workflow_dispatch:
 
 permissions:
@@ -25,7 +25,7 @@ jobs:
       - name: Pick today's read and refresh the Claude changelog
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          SITE_TZ: ${{ vars.SITE_TZ || 'Asia/Kolkata' }}
+          SITE_TZ: ${{ vars.SITE_TZ || 'America/Los_Angeles' }}
         run: node scripts/update-content.mjs
       - name: Commit changes
         run: |
