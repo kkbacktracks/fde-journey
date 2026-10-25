@@ -5,6 +5,8 @@ const roadmap = JSON.parse(await readFile(new URL("../data/roadmap.json", import
 const seeds = JSON.parse(await readFile(new URL("../data/seed-reads.json", import.meta.url), "utf8"));
 const urls = new Set(seeds.map((s) => s.url));
 for (const p of roadmap.phases) for (const w of p.weeks) for (const t of w.tasks) for (const r of t.resources ?? []) urls.add(r.url);
+// Feeds the morning job reads: a blocked or moved feed silently shrinks the daily picks.
+for (const f of [...JSON.parse(await readFile(new URL("../data/feeds.json", import.meta.url), "utf8")), ...JSON.parse(await readFile(new URL("../data/substacks.json", import.meta.url), "utf8"))]) urls.add(f.url);
 
 // Sites that block bots answer 403/429 even when the page is fine; report them separately.
 const BOT_WALLS = [403, 429, 999];

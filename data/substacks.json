@@ -1,16 +1,80 @@
 [
-  { "name": "The Pragmatic Engineer", "url": "https://newsletter.pragmaticengineer.com/feed", "tag": "system-design", "weight": 1.2 },
-  { "name": "ByteByteGo", "url": "https://blog.bytebytego.com/feed", "tag": "system-design", "weight": 1.0 },
-  { "name": "System Design One", "url": "https://newsletter.systemdesign.one/feed", "tag": "system-design", "weight": 1.0 },
-  { "name": "Refactoring", "url": "https://refactoring.fm/feed", "tag": "system-design", "weight": 0.9 },
-  { "name": "Latent Space", "url": "https://www.latent.space/feed", "tag": "ai", "weight": 1.1 },
-  { "name": "Interconnects", "url": "https://www.interconnects.ai/feed", "tag": "ai", "weight": 1.0 },
-  { "name": "Ahead of AI", "url": "https://magazine.sebastianraschka.com/feed", "tag": "ai", "weight": 1.1 },
-  { "name": "One Useful Thing", "url": "https://www.oneusefulthing.org/feed", "tag": "ai", "weight": 1.0 },
-  { "name": "Import AI", "url": "https://importai.substack.com/feed", "tag": "ai", "weight": 0.9 },
-  { "name": "Simon Willison's Newsletter", "url": "https://simonw.substack.com/feed", "tag": "ai", "weight": 1.0 },
-  { "name": "Decoding ML", "url": "https://decodingml.substack.com/feed", "tag": "ai", "weight": 1.0 },
-  { "name": "Gradient Flow", "url": "https://gradientflow.substack.com/feed", "tag": "ai", "weight": 0.9 },
-  { "name": "Lenny's Newsletter", "url": "https://www.lennysnewsletter.com/feed", "tag": "fde", "weight": 0.9 },
-  { "name": "High Growth Engineer", "url": "https://read.highgrowthengineer.com/feed", "tag": "fde", "weight": 0.9 }
+  {
+    "name": "The Pragmatic Engineer",
+    "url": "https://newsletter.pragmaticengineer.com/feed",
+    "tag": "system-design",
+    "weight": 1.2
+  },
+  {
+    "name": "ByteByteGo",
+    "url": "https://blog.bytebytego.com/feed",
+    "tag": "system-design",
+    "weight": 1.0
+  },
+  {
+    "name": "System Design One",
+    "url": "https://newsletter.systemdesign.one/feed",
+    "tag": "system-design",
+    "weight": 1.0
+  },
+  {
+    "name": "Refactoring",
+    "url": "https://refactoring.fm/feed",
+    "tag": "system-design",
+    "weight": 0.9
+  },
+  {
+    "name": "Latent Space",
+    "url": "https://www.latent.space/feed",
+    "tag": "ai",
+    "weight": 1.1
+  },
+  {
+    "name": "Interconnects",
+    "url": "https://www.interconnects.ai/feed",
+    "tag": "ai",
+    "weight": 1.0
+  },
+  {
+    "name": "Ahead of AI",
+    "url": "https://magazine.sebastianraschka.com/feed",
+    "tag": "ai",
+    "weight": 1.1
+  },
+  {
+    "name": "One Useful Thing",
+    "url": "https://www.oneusefulthing.org/feed",
+    "tag": "ai",
+    "weight": 1.0
+  },
+  {
+    "name": "Lenny's Newsletter",
+    "url": "https://www.lennysnewsletter.com/feed",
+    "tag": "fde",
+    "weight": 0.9
+  },
+  {
+    "name": "High Growth Engineer",
+    "url": "https://read.highgrowthengineer.com/feed",
+    "tag": "fde",
+    "weight": 0.9
+  },
+  {
+    "name": "Understanding AI",
+    "url": "https://www.understandingai.org/feed",
+    "tag": "ai",
+    "weight": 1.0
+  },
+  {
+    "name": "Artificial Ignorance",
+    "url": "https://www.ignorance.ai/feed",
+    "tag": "ai",
+    "weight": 1.0
+  },
+  {
+    "name": "Import AI",
+    "url": "https://jack-clark.net/feed/",
+    "tag": "ai",
+    "weight": 0.8
+  }
 ]

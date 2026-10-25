@@ -2,7 +2,7 @@ name: Check resource links
 
 on:
   push:
-    paths: ["data/roadmap.json", "data/seed-reads.json"]
+    paths: ["data/roadmap.json", "data/seed-reads.json", "data/feeds.json", "data/substacks.json"]
   schedule:
     - cron: "0 15 * * 1" # Mondays
   workflow_dispatch:
