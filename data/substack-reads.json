@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "date": "2026-10-25",
+    "title": "EP230: RAG vs Agentic RAG",
+    "url": "https://blog.bytebytego.com/p/ep230-rag-vs-agentic-rag",
+    "source": "ByteByteGo",
+    "tag": "system-design",
+    "why": "Top-ranked new post from ByteByteGo this week.",
+    "pickedBy": "score"
+  }
+]
