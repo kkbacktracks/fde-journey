@@ -1,0 +1,21 @@
+name: Check resource links
+
+on:
+  push:
+    paths: ["data/roadmap.json", "data/seed-reads.json"]
+  schedule:
+    - cron: "0 15 * * 1" # Mondays
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/check-links.mjs

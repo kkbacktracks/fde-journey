@@ -7,15 +7,86 @@
       "title": "System design foundations",
       "months": "Oct 26 to Dec 13",
       "tag": "system-design",
-      "gate": "Whiteboard 6 classic designs end to end, 45 minutes each, and publish a write-up of the best one.",
+      "why": "FDEs design systems on the spot with a customer in the room. You need the building blocks cold so you can spend your energy on the customer's problem.",
+      "gate": "Whiteboard 6 classic designs end to end in 45 minutes each, and publish a write-up of the best one.",
       "weeks": [
-        { "title": "Estimation, networking and load balancing", "tasks": ["Latency numbers and 3 back-of-envelope estimates (QPS, storage, bandwidth)", "Read DDIA chapter 1: reliability, scalability, maintainability", "DNS, L4 vs L7 load balancing, health checks", "Reverse proxies, API gateways and CDNs", "Vertical vs horizontal scaling for a service you know"], "challenge": "Draw the full request path for loading a product page, from DNS to database, with rough numbers at each hop." },
-        { "title": "Caching and storage engines", "tasks": ["Cache-aside, write-through, write-back; LRU, LFU, TTL", "Cache stampede and hot keys", "DDIA chapters 2 and 3: data models, B-trees vs LSM trees", "How indexes work and what they cost on writes", "Pick the right database for 5 example workloads"], "challenge": "Build a tiny LRU cache with TTL in your main language, with tests." },
-        { "title": "Replication and partitioning", "tasks": ["DDIA chapter 5: leader-follower, multi-leader, leaderless", "Replication lag, read-your-writes, quorums", "DDIA chapter 6: partitioning by range vs hash", "Consistent hashing and virtual nodes", "Rebalancing and hot partitions"], "challenge": "Implement consistent hashing with virtual nodes and measure key movement when adding a node." },
-        { "title": "Transactions and consensus", "tasks": ["DDIA chapter 7: isolation levels and their anomalies", "Optimistic vs pessimistic locking; 2PC and sagas", "CAP and PACELC without the myths", "Raft: leader election and log replication (raft.github.io)", "Distributed locks and fencing tokens (Kleppmann)"], "challenge": "Design the money transfer flow for a wallet app using a saga, including failure handling." },
-        { "title": "Messaging, APIs and rate limiting", "tasks": ["Queues vs logs: SQS vs Kafka; delivery semantics", "Idempotency keys, outbox pattern, dead letter queues", "REST vs gRPC, pagination, versioning", "Rate limiting: token bucket and sliding window", "OAuth 2.0 and JWTs"], "challenge": "Implement a sliding-window rate limiter backed by Redis." },
-        { "title": "Reliability and observability", "tasks": ["SLIs, SLOs and error budgets (Google SRE book)", "Metrics, logs and traces, and what each answers", "Timeouts, retries with jitter, circuit breakers", "Graceful degradation and load shedding", "Read a public postmortem and summarize the root cause"], "challenge": "Write an SLO doc for a service you've worked on, with alerts and an error budget policy." },
-        { "title": "Design practice and phase review", "tasks": ["Design a URL shortener", "Design a news feed", "Design a chat system", "Design a payment system", "Design a distributed rate limiter"], "challenge": "Phase capstone: record one design in 45 minutes, then publish your best design as a write-up with diagrams." }
+        {
+          "title": "The interview framework and the numbers",
+          "tasks": [
+            { "task": "Read Hello Interview's 'How to Prepare' and 'Delivery Framework'. Write the 5-step framework (requirements, entities, API, high-level design, deep dives) on an index card.", "resources": [{ "title": "Hello Interview: Delivery Framework", "url": "https://www.hellointerview.com/learn/system-design/in-a-hurry/delivery" }, { "title": "Hello Interview: How to Prepare", "url": "https://www.hellointerview.com/learn/system-design/in-a-hurry/how-to-prepare" }] },
+            { "task": "Learn the numbers: memory vs SSD vs network latency, QPS one Postgres box handles, Redis ops/sec. Make a one-page cheat sheet in your own words.", "resources": [{ "title": "Hello Interview: Numbers to Know", "url": "https://www.hellointerview.com/learn/system-design/core-concepts/numbers-to-know" }] },
+            { "task": "Do 3 back-of-envelope estimates: daily storage for WhatsApp messages, peak QPS for a ticket sale, bandwidth for 1M concurrent video viewers. Show your math.", "resources": [{ "title": "System Design Primer: back-of-the-envelope", "url": "https://github.com/donnemartin/system-design-primer#appendix" }] },
+            { "task": "Networking essentials: TCP vs UDP, HTTP/2, WebSockets vs SSE vs long polling, L4 vs L7 load balancers. Write when you'd pick each.", "resources": [{ "title": "Hello Interview: Networking Essentials", "url": "https://www.hellointerview.com/learn/system-design/core-concepts/networking-essentials" }, { "title": "Hello Interview: Real-time Updates pattern", "url": "https://www.hellointerview.com/learn/system-design/patterns/realtime-updates" }] },
+            { "task": "Read DDIA chapter 1 (reliability, scalability, maintainability). Note the Twitter fan-out example: you'll reuse it all phase.", "resources": [{ "title": "Designing Data-Intensive Applications", "url": "https://dataintensive.net/" }] }
+          ],
+          "challenge": "Watch Hello Interview's Bitly breakdown, then close it and design Bitly yourself in 45 minutes. Compare."
+        },
+        {
+          "title": "APIs, data modeling and indexing",
+          "tasks": [
+            { "task": "API design: REST resource naming, pagination (offset vs cursor), idempotent POST. Design the API for a food-delivery app's orders.", "resources": [{ "title": "Hello Interview: API Design", "url": "https://www.hellointerview.com/learn/system-design/core-concepts/api-design" }, { "title": "Stripe: idempotency keys", "url": "https://stripe.com/blog/idempotency" }] },
+            { "task": "Data modeling: relational vs document vs wide-column. Model the same orders domain twice (Postgres and DynamoDB) and list the tradeoffs.", "resources": [{ "title": "Hello Interview: Data Modeling", "url": "https://www.hellointerview.com/learn/system-design/core-concepts/data-modeling" }, { "title": "Hello Interview: DynamoDB deep dive", "url": "https://www.hellointerview.com/learn/system-design/deep-dives/dynamodb" }] },
+            { "task": "Indexing: B-tree vs LSM tree vs hash vs geospatial index. Run EXPLAIN on a Postgres query before and after adding an index.", "resources": [{ "title": "Hello Interview: Database Indexing", "url": "https://www.hellointerview.com/learn/system-design/core-concepts/db-indexing" }, { "title": "Use The Index, Luke", "url": "https://use-the-index-luke.com/" }] },
+            { "task": "Read DDIA chapter 3 (storage and retrieval) and write 5 bullets on why LSM trees win on writes.", "resources": [{ "title": "Designing Data-Intensive Applications", "url": "https://dataintensive.net/" }] },
+            { "task": "Postgres deep dive: MVCC, when one box is enough, read replicas. Most customer systems you'll meet run on Postgres.", "resources": [{ "title": "Hello Interview: PostgreSQL deep dive", "url": "https://www.hellointerview.com/learn/system-design/deep-dives/postgres" }] }
+          ],
+          "challenge": "Design the schema, indexes and API for a Ticketmaster-style event booking system, then check it against the Hello Interview breakdown."
+        },
+        {
+          "title": "Caching, Redis and scaling reads",
+          "tasks": [
+            { "task": "Caching strategies: cache-aside, write-through, write-behind, TTLs, invalidation, stampede protection. Draw where each sits.", "resources": [{ "title": "Hello Interview: Caching", "url": "https://www.hellointerview.com/learn/system-design/core-concepts/caching" }] },
+            { "task": "Redis deep dive: data structures, sorted sets for leaderboards, Redis as a lock and as a rate limiter.", "resources": [{ "title": "Hello Interview: Redis deep dive", "url": "https://www.hellointerview.com/learn/system-design/deep-dives/redis" }] },
+            { "task": "Scaling reads pattern: replicas, caches, CDNs, denormalization. Apply it to a product catalog with 100x more reads than writes.", "resources": [{ "title": "Hello Interview: Scaling Reads", "url": "https://www.hellointerview.com/learn/system-design/patterns/scaling-reads" }] },
+            { "task": "Code an LRU cache with TTL in Python or TypeScript with tests (LeetCode 146 plus expiry).", "resources": [{ "title": "LeetCode 146: LRU Cache", "url": "https://leetcode.com/problems/lru-cache/" }] },
+            { "task": "Real-world read: how Discord moved trillions of messages and used request coalescing for hot partitions.", "resources": [{ "title": "Discord: How we store trillions of messages", "url": "https://discord.com/blog/how-discord-stores-trillions-of-messages" }] }
+          ],
+          "challenge": "Design the Facebook News Feed (fan-out on write vs read, caching the feed). Compare with Hello Interview's breakdown."
+        },
+        {
+          "title": "Replication, sharding and consistent hashing",
+          "tasks": [
+            { "task": "Watch Kleppmann's distributed systems lectures 1 to 3 (why distributed systems, the two generals, time and clocks).", "resources": [{ "title": "Kleppmann: Distributed Systems lectures (YouTube)", "url": "https://www.youtube.com/playlist?list=PLeKd45zvjcDFUEv_ohr_HdUFe97RItdiB" }, { "title": "Lecture notes (PDF)", "url": "https://www.cl.cam.ac.uk/teaching/2122/ConcDisSys/dist-sys-notes.pdf" }] },
+            { "task": "Read DDIA chapter 5 (replication). Explain replication lag and read-your-writes to an imaginary customer whose edits 'disappear'.", "resources": [{ "title": "Designing Data-Intensive Applications", "url": "https://dataintensive.net/" }] },
+            { "task": "Sharding: choosing a shard key, hot partitions, cross-shard queries. Pick shard keys for chat, orders and analytics events.", "resources": [{ "title": "Hello Interview: Sharding", "url": "https://www.hellointerview.com/learn/system-design/core-concepts/sharding" }] },
+            { "task": "Consistent hashing with virtual nodes. Implement it in under 80 lines and measure key movement when adding a node.", "resources": [{ "title": "Hello Interview: Consistent Hashing", "url": "https://www.hellointerview.com/learn/system-design/core-concepts/consistent-hashing" }] },
+            { "task": "Cassandra deep dive: leaderless replication, quorums (R + W > N), tunable consistency.", "resources": [{ "title": "Hello Interview: Cassandra deep dive", "url": "https://www.hellointerview.com/learn/system-design/deep-dives/cassandra" }, { "title": "Amazon Dynamo paper", "url": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf" }] }
+          ],
+          "challenge": "Design WhatsApp (1:1 and group chat, delivery receipts, offline users). Compare with Hello Interview's breakdown."
+        },
+        {
+          "title": "Consistency, transactions and contention",
+          "tasks": [
+            { "task": "CAP and PACELC in practice: which parts of a booking system need strong consistency and which can be eventual?", "resources": [{ "title": "Hello Interview: CAP Theorem", "url": "https://www.hellointerview.com/learn/system-design/core-concepts/cap-theorem" }, { "title": "Jepsen: consistency models map", "url": "https://jepsen.io/consistency" }] },
+            { "task": "Dealing with contention: pessimistic locks, optimistic concurrency, distributed locks. Solve the 'last seat' double-booking problem three ways.", "resources": [{ "title": "Hello Interview: Dealing with Contention", "url": "https://www.hellointerview.com/learn/system-design/patterns/dealing-with-contention" }] },
+            { "task": "Read Kleppmann on distributed locking and fencing tokens. Write down why a Redis lock alone is not safe.", "resources": [{ "title": "Kleppmann: How to do distributed locking", "url": "https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html" }] },
+            { "task": "Sagas vs 2PC for multi-service workflows. Sketch a saga for 'charge card, reserve stock, book courier' with compensations.", "resources": [{ "title": "microservices.io: Saga pattern", "url": "https://microservices.io/patterns/data/saga.html" }, { "title": "Hello Interview: Multi-step Processes", "url": "https://www.hellointerview.com/learn/system-design/patterns/multi-step-processes" }] },
+            { "task": "Raft: play the visualization end to end, then explain leader election and log replication in 5 sentences.", "resources": [{ "title": "The Secret Lives of Data: Raft", "url": "https://thesecretlivesofdata.com/raft/" }, { "title": "raft.github.io", "url": "https://raft.github.io/" }] }
+          ],
+          "challenge": "Design a payment system that never double-charges. Compare with Hello Interview's Payment System breakdown."
+        },
+        {
+          "title": "Queues, streams and async work",
+          "tasks": [
+            { "task": "Read Jay Kreps's 'The Log': why an append-only log is the backbone of data integration.", "resources": [{ "title": "Jay Kreps: The Log", "url": "https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying" }] },
+            { "task": "Kafka deep dive: partitions, consumer groups, ordering, retention, exactly-once in practice.", "resources": [{ "title": "Hello Interview: Kafka deep dive", "url": "https://www.hellointerview.com/learn/system-design/deep-dives/kafka" }] },
+            { "task": "Outbox pattern and change data capture: how to update a DB and publish an event without losing either.", "resources": [{ "title": "microservices.io: Transactional Outbox", "url": "https://microservices.io/patterns/data/transactional-outbox.html" }, { "title": "Hello Interview: Change Data Capture", "url": "https://www.hellointerview.com/learn/system-design/deep-dives/change-data-capture" }] },
+            { "task": "Long-running tasks: job queues, workers, retries, dead letter queues, durable workflows (Temporal). Agents will need all of this later.", "resources": [{ "title": "Hello Interview: Managing Long Running Tasks", "url": "https://www.hellointerview.com/learn/system-design/patterns/long-running-tasks" }, { "title": "Hello Interview: Temporal deep dive", "url": "https://www.hellointerview.com/learn/system-design/deep-dives/temporal" }] },
+            { "task": "Avoiding queue backlogs: read the Amazon Builders' Library article and list 3 tactics.", "resources": [{ "title": "Amazon: Avoiding insurmountable queue backlogs", "url": "https://aws.amazon.com/builders-library/avoiding-insurmountable-queue-backlogs/" }] }
+          ],
+          "challenge": "Design a distributed job scheduler. Compare with Hello Interview's Job Scheduler breakdown."
+        },
+        {
+          "title": "Reliability, rate limiting and design practice",
+          "tasks": [
+            { "task": "Timeouts, retries with exponential backoff and jitter, circuit breakers. Write a retry helper with jitter.", "resources": [{ "title": "Amazon: Timeouts, retries and backoff with jitter", "url": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/" }, { "title": "Martin Fowler: Circuit Breaker", "url": "https://martinfowler.com/bliki/CircuitBreaker.html" }] },
+            { "task": "Rate limiting: token bucket vs sliding window. Implement a sliding-window limiter on Redis.", "resources": [{ "title": "Stripe: Scaling your API with rate limiters", "url": "https://stripe.com/blog/rate-limiters" }, { "title": "Hello Interview: Distributed Rate Limiter", "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/distributed-rate-limiter" }] },
+            { "task": "SLIs, SLOs and error budgets. Write an SLO for an API you've built at work.", "resources": [{ "title": "Google SRE book: Service Level Objectives", "url": "https://sre.google/sre-book/service-level-objectives/" }] },
+            { "task": "Read 3 public postmortems and write the root cause and the fix for each in one line.", "resources": [{ "title": "Dan Luu: collection of postmortems", "url": "https://github.com/danluu/post-mortems" }] },
+            { "task": "Design ChatGPT as a system (streaming, conversation storage, GPU capacity). This is the bridge into phase 2.", "resources": [{ "title": "Hello Interview: ChatGPT breakdown", "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/chatgpt" }] }
+          ],
+          "challenge": "Phase capstone: record yourself designing Dropbox in 45 minutes, then publish your best design of the phase as a write-up with diagrams."
+        }
       ]
     },
     {
@@ -23,15 +94,86 @@
       "title": "LLM application engineering",
       "months": "Dec 14 to Jan 31",
       "tag": "ai",
+      "why": "Most FDE roles now ship LLM features into customer workflows. You need to build, measure and cost them like any production system.",
       "gate": "Ship a RAG app with an eval suite and a written cost and latency model.",
       "weeks": [
-        { "title": "How LLMs work and the Claude API", "tasks": ["Tokens, context windows and sampling", "The Illustrated Transformer (Jay Alammar)", "Messages API, system prompts, multi-turn and streaming", "Errors, retries and rate limits", "Make your first 10 calls with the SDK"], "challenge": "Build a CLI that summarizes any URL using the Claude API, with streaming output." },
-        { "title": "Prompting, tool use and structured output", "tasks": ["Read Anthropic's prompt engineering guide end to end", "Structure prompts with XML tags and examples", "Tool use: defining tools and handling tool calls", "Structured output with JSON schemas", "Designing tools an LLM can use well"], "challenge": "Build a small assistant that can call 3 tools, and improve its prompt measured on 20 inputs." },
-        { "title": "Embeddings and RAG", "tasks": ["What embeddings capture and where they fail", "pgvector, HNSW and similarity search", "Chunking strategies", "Hybrid search (BM25 plus vectors) and reranking", "Anthropic's Contextual Retrieval post"], "challenge": "Index 1,000 documents in pgvector and build a hybrid search endpoint with reranking." },
-        { "title": "Evals", "tasks": ["Hamel Husain: 'Your AI product needs evals'", "Build a golden dataset of 50 examples", "Code-based checks vs LLM-as-judge", "Error analysis: read 100 traces and cluster failure modes", "Run evals in CI"], "challenge": "Write an eval suite for your RAG app and fix the top failure mode it finds." },
-        { "title": "Cost, latency and documents", "tasks": ["Prompt caching and when it pays off", "Batch processing and model routing", "Measuring time to first token and total latency", "PDF and image input, document extraction", "Citations"], "challenge": "Cut your app's cost per query by 50% without dropping eval scores. Document how." },
-        { "title": "Build: RAG app over real documents", "tasks": ["Pick a real document set (docs of a product you use)", "Ingestion pipeline", "Query API plus a minimal UI", "Wire evals into CI and add tracing", "Deploy it"], "challenge": "Get one other person to use it and collect their feedback." },
-        { "title": "Ship and write the case study", "tasks": ["Write the cost model per 1,000 queries", "Write 'how this scales to 1M queries a day'", "Demo video and README", "Case study: problem, approach, results, tradeoffs", "Review weak spots from the phase"], "challenge": "Phase capstone: publish the case study and share it on LinkedIn." }
+        {
+          "title": "How LLMs work, and your first API calls",
+          "tasks": [
+            { "task": "Watch Karpathy's 'Deep Dive into LLMs like ChatGPT' (first half): pretraining, tokens, sampling.", "resources": [{ "title": "Karpathy: Deep Dive into LLMs like ChatGPT", "url": "https://www.youtube.com/watch?v=7xTGNNLPyMI" }] },
+            { "task": "Watch the second half: post-training, RLHF, hallucinations, tool use. Write 5 things that will change how you prompt.", "resources": [{ "title": "Karpathy: Deep Dive into LLMs like ChatGPT", "url": "https://www.youtube.com/watch?v=7xTGNNLPyMI" }] },
+            { "task": "Read The Illustrated Transformer and explain attention in 5 sentences, no math.", "resources": [{ "title": "Jay Alammar: The Illustrated Transformer", "url": "https://jalammar.github.io/illustrated-transformer/" }, { "title": "3Blue1Brown: Transformers explained (video)", "url": "https://www.youtube.com/watch?v=wjZofJX0v4M" }] },
+            { "task": "Get an API key and work through Anthropic API fundamentals: messages, system prompts, parameters, streaming.", "resources": [{ "title": "Anthropic courses: API fundamentals", "url": "https://github.com/anthropics/courses/tree/master/anthropic_api_fundamentals" }, { "title": "Claude docs: Get started", "url": "https://platform.claude.com/docs/en/get-started" }] },
+            { "task": "Learn model choice, pricing, rate limits and error handling. Make a table of when you'd use Haiku, Sonnet or Opus for a customer.", "resources": [{ "title": "Claude docs: Choosing a model", "url": "https://platform.claude.com/docs/en/about-claude/models/choosing-a-model" }, { "title": "Claude docs: Pricing", "url": "https://platform.claude.com/docs/en/about-claude/pricing" }] }
+          ],
+          "challenge": "Build a CLI that summarizes any URL with the Claude API, with streaming output and retry on rate limits."
+        },
+        {
+          "title": "Prompt engineering for real workloads",
+          "tasks": [
+            { "task": "Do chapters 1 to 4 of Anthropic's interactive prompt engineering tutorial.", "resources": [{ "title": "Anthropic: Prompt engineering interactive tutorial", "url": "https://github.com/anthropics/courses/tree/master/prompt_engineering_interactive_tutorial" }] },
+            { "task": "Finish chapters 5 to 9: XML tags, examples, letting the model think, chaining prompts.", "resources": [{ "title": "Anthropic: Prompt engineering interactive tutorial", "url": "https://github.com/anthropics/courses/tree/master/prompt_engineering_interactive_tutorial" }, { "title": "Claude docs: Prompt engineering overview", "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview" }] },
+            { "task": "Work through 'Real world prompting': a customer-support prompt and a medical-record summarizer.", "resources": [{ "title": "Anthropic courses: Real world prompting", "url": "https://github.com/anthropics/courses/tree/master/real_world_prompting" }] },
+            { "task": "Read Lilian Weng's prompt engineering survey for the research behind the techniques.", "resources": [{ "title": "Lilian Weng: Prompt Engineering", "url": "https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/" }] },
+            { "task": "Take a messy prompt from work or a side project and rewrite it. Score both versions on 20 inputs in a spreadsheet.", "resources": [{ "title": "Anthropic courses: Prompt evaluations", "url": "https://github.com/anthropics/courses/tree/master/prompt_evaluations" }] }
+          ],
+          "challenge": "Build a support-ticket classifier (category, urgency, summary) and report accuracy on 30 hand-labeled tickets."
+        },
+        {
+          "title": "Tool use and structured output",
+          "tasks": [
+            { "task": "Read the tool use overview and implement a single tool end to end (a weather or calculator tool).", "resources": [{ "title": "Claude docs: Tool use overview", "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview" }, { "title": "Claude docs: Implement tool use", "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/implement-tool-use" }] },
+            { "task": "Do the Anthropic tool use course: multiple tools, tool results, the tool-use loop.", "resources": [{ "title": "Anthropic courses: Tool use", "url": "https://github.com/anthropics/courses/tree/master/tool_use" }] },
+            { "task": "Structured outputs: extract invoice fields into a JSON schema and validate with Pydantic or Zod.", "resources": [{ "title": "Claude docs: Structured outputs", "url": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs" }] },
+            { "task": "Read 'Writing effective tools for agents' and redesign your tools using its advice.", "resources": [{ "title": "Anthropic: Writing effective tools for agents", "url": "https://www.anthropic.com/engineering/writing-tools-for-agents" }] },
+            { "task": "Take the 'Building with the Claude API' course modules on tool use and RAG (free, with certificate).", "resources": [{ "title": "Anthropic Academy: Building with the Claude API", "url": "https://anthropic.skilljar.com/claude-with-the-anthropic-api" }] }
+          ],
+          "challenge": "Build an assistant with 3 tools over a real API (GitHub, a calendar, or a public weather API)."
+        },
+        {
+          "title": "Embeddings, vector search and RAG",
+          "tasks": [
+            { "task": "Read Vicki Boykis's 'What are embeddings' (sections 1 to 4).", "resources": [{ "title": "Vicki Boykis: What are embeddings", "url": "https://vickiboykis.com/what_are_embeddings/" }, { "title": "Claude docs: Embeddings", "url": "https://platform.claude.com/docs/en/build-with-claude/embeddings" }] },
+            { "task": "Vector databases and HNSW: how approximate nearest neighbor search works and what it costs.", "resources": [{ "title": "Hello Interview: Vector Databases", "url": "https://www.hellointerview.com/learn/system-design/deep-dives/vector-databases" }, { "title": "Pinecone: HNSW explained", "url": "https://www.pinecone.io/learn/series/faiss/hnsw/" }] },
+            { "task": "Set up pgvector locally and index 1,000 documents. Time a query.", "resources": [{ "title": "pgvector", "url": "https://github.com/pgvector/pgvector" }] },
+            { "task": "Chunking strategies: fixed, recursive, semantic. Try two on your corpus and compare retrieval on 10 questions.", "resources": [{ "title": "Pinecone: Chunking strategies", "url": "https://www.pinecone.io/learn/chunking-strategies/" }] },
+            { "task": "Read Anthropic's Contextual Retrieval post (hybrid BM25 plus embeddings plus reranking) and plan how you'd add it.", "resources": [{ "title": "Anthropic: Contextual Retrieval", "url": "https://www.anthropic.com/news/contextual-retrieval" }] }
+          ],
+          "challenge": "Build a semantic search endpoint over your 1,000 documents with hybrid search."
+        },
+        {
+          "title": "Evals: the core FDE skill",
+          "tasks": [
+            { "task": "Read Hamel Husain's 'Your AI product needs evals'.", "resources": [{ "title": "Hamel Husain: Your AI product needs evals", "url": "https://hamel.dev/blog/posts/evals/" }] },
+            { "task": "Read the LLM Evals FAQ sections on error analysis and LLM-as-judge.", "resources": [{ "title": "Hamel & Shreya: LLM Evals FAQ", "url": "https://hamel.dev/blog/posts/evals-faq/" }] },
+            { "task": "Error analysis on your own app: read 50 traces, write open notes, then cluster them into failure modes.", "resources": [{ "title": "Hamel: A field guide to improving AI products", "url": "https://hamel.dev/blog/posts/field-guide/" }] },
+            { "task": "Build a golden set of 50 cases with code-based checks and one LLM judge. Calibrate the judge against your own labels.", "resources": [{ "title": "Claude docs: Define success and build evals", "url": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests" }, { "title": "Eugene Yan: Evaluating LLM evaluators", "url": "https://eugeneyan.com/writing/llm-evaluators/" }] },
+            { "task": "Read Anthropic's evals guide for agents and note what changes when the system takes actions.", "resources": [{ "title": "Anthropic: Demystifying evals for AI agents", "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents" }] }
+          ],
+          "challenge": "Write an eval suite for your RAG search, run it in CI, and fix the top failure mode."
+        },
+        {
+          "title": "Production RAG: cost, latency and documents",
+          "tasks": [
+            { "task": "Read Jason Liu's 'Systematically improving your RAG' and apply the retrieval metrics (recall@k) to your app.", "resources": [{ "title": "Jason Liu: Systematically improving your RAG", "url": "https://jxnl.co/writing/2024/05/22/systematically-improving-your-rag/" }] },
+            { "task": "Prompt caching: cache your system prompt and documents, then measure cost and latency before and after.", "resources": [{ "title": "Claude docs: Prompt caching", "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching" }] },
+            { "task": "Batch processing for offline jobs, and streaming for interactive ones. Measure time to first token.", "resources": [{ "title": "Claude docs: Batch processing", "url": "https://platform.claude.com/docs/en/build-with-claude/batch-processing" }, { "title": "Claude docs: Streaming", "url": "https://platform.claude.com/docs/en/build-with-claude/streaming" }] },
+            { "task": "PDFs and citations: answer questions over a 50-page PDF with cited passages.", "resources": [{ "title": "Claude docs: PDF support", "url": "https://platform.claude.com/docs/en/build-with-claude/pdf-support" }, { "title": "Claude docs: Citations", "url": "https://platform.claude.com/docs/en/build-with-claude/citations" }] },
+            { "task": "Read 'Patterns for building LLM-based systems' and pick 2 patterns your app is missing.", "resources": [{ "title": "Eugene Yan: Patterns for LLM systems", "url": "https://eugeneyan.com/writing/llm-patterns/" }, { "title": "Applied LLMs: What we learned from a year of building", "url": "https://applied-llms.org/" }] }
+          ],
+          "challenge": "Cut your app's cost per query by 50% without dropping eval scores. Document how."
+        },
+        {
+          "title": "Build and ship: RAG over a real customer-like corpus",
+          "tasks": [
+            { "task": "Pick a realistic corpus (a public company's help center or API docs) and write a 1-page 'customer brief': users, questions, success metric.", "resources": [{ "title": "Chip Huyen: AI Engineering book resources", "url": "https://github.com/chiphuyen/aie-book" }] },
+            { "task": "Build ingestion: crawl, chunk, embed, store. Make it re-runnable.", "resources": [{ "title": "pgvector", "url": "https://github.com/pgvector/pgvector" }] },
+            { "task": "Build the query API and a minimal chat UI with streaming and citations.", "resources": [{ "title": "Claude docs: Citations", "url": "https://platform.claude.com/docs/en/build-with-claude/citations" }] },
+            { "task": "Wire your eval suite into CI and add tracing for every request.", "resources": [{ "title": "Langfuse docs: tracing", "url": "https://langfuse.com/docs" }] },
+            { "task": "Deploy it, write the cost per 1,000 queries and a 'how this scales to 1M queries a day' section.", "resources": [{ "title": "Hello Interview: ChatGPT breakdown", "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/chatgpt" }] }
+          ],
+          "challenge": "Phase capstone: publish the case study (problem, approach, eval results, cost, tradeoffs) and get one person to use the app."
+        }
       ]
     },
     {
@@ -39,14 +181,75 @@
       "title": "Agents and production AI",
       "months": "Feb 1 to Mar 14",
       "tag": "ai",
+      "why": "About a third of FDE postings ask for agent experience and integrating with customer systems. This phase is where you become hireable.",
       "gate": "An agent that integrates with a real third-party system, deployed, monitored and evaluated.",
       "weeks": [
-        { "title": "Agents and workflow patterns", "tasks": ["Anthropic: Building effective agents", "Workflows vs agents, and when not to build an agent", "Prompt chaining, routing and parallelization", "Orchestrator-workers and evaluator-optimizer", "Lilian Weng: LLM Powered Autonomous Agents"], "challenge": "Write an agent loop from scratch in under 150 lines, no framework." },
-        { "title": "MCP and the Claude Agent SDK", "tasks": ["MCP concepts: tools, resources, prompts", "Build an MCP server for an API you use", "Claude Agent SDK quickstart", "Subagents, hooks and permissions", "Headless runs in CI"], "challenge": "Publish an MCP server on GitHub for a service with no official one." },
-        { "title": "Context, memory and security", "tasks": ["Anthropic: Effective context engineering for AI agents", "Compaction and long-term memory designs", "Prompt injection and the lethal trifecta (Simon Willison)", "Data boundaries, PII and least privilege", "Input and output guardrails"], "challenge": "Red-team your own agent: find 3 injection paths and fix them." },
-        { "title": "Observability, deployment and enterprise cloud", "tasks": ["Tracing agents with OpenTelemetry or Langfuse", "Queues and workers for long-running agents", "IAM, VPC and private networking basics", "Claude on AWS Bedrock and Google Cloud", "OAuth flows and webhooks for SaaS APIs"], "challenge": "Deploy your agent behind a queue with full tracing and a cost, latency and success dashboard." },
-        { "title": "Build: integration agent", "tasks": ["Pick a real workflow (support triage, sales research, ops reporting)", "Design the system and the evals first", "Build the core loop", "Integrate a real SaaS tool (Slack, Jira or Notion)", "Human approval steps and guardrails"], "challenge": "Demo it end to end to someone non-technical." },
-        { "title": "Harden, measure and write up", "tasks": ["Eval suite for the agent", "Run it on 100 real tasks and report the success rate honestly", "Monitoring and alerts", "Demo video", "Case study write-up"], "challenge": "Phase capstone: publish the agent case study." }
+        {
+          "title": "Agent patterns from first principles",
+          "tasks": [
+            { "task": "Read 'Building effective agents' twice. List the 5 workflow patterns and when to use each.", "resources": [{ "title": "Anthropic: Building effective agents", "url": "https://www.anthropic.com/engineering/building-effective-agents" }] },
+            { "task": "Write an agent loop from scratch (no framework) in under 150 lines: call model, run tools, loop until done.", "resources": [{ "title": "Claude docs: Implement tool use", "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/implement-tool-use" }] },
+            { "task": "Read Lilian Weng's 'LLM Powered Autonomous Agents' and Chip Huyen's 'Agents'.", "resources": [{ "title": "Lilian Weng: LLM Powered Autonomous Agents", "url": "https://lilianweng.github.io/posts/2023-06-23-agent/" }, { "title": "Chip Huyen: Agents", "url": "https://huyenchip.com/2025/01/07/agents.html" }] },
+            { "task": "Do units 1 and 2 of the Hugging Face Agents course to see how frameworks structure the same loop.", "resources": [{ "title": "Hugging Face: AI Agents course", "url": "https://huggingface.co/learn/agents-course/unit0/introduction" }] },
+            { "task": "Read how Anthropic built its multi-agent research system. Note what broke and how they fixed it.", "resources": [{ "title": "Anthropic: Multi-agent research system", "url": "https://www.anthropic.com/engineering/multi-agent-research-system" }] }
+          ],
+          "challenge": "Build an orchestrator-workers agent that researches a company and writes a cited one-page brief, the kind an FDE prepares before a first customer call."
+        },
+        {
+          "title": "MCP: connecting agents to customer systems",
+          "tasks": [
+            { "task": "Read the MCP announcement and spec overview: hosts, clients, servers, tools, resources, prompts.", "resources": [{ "title": "Anthropic: Introducing MCP", "url": "https://www.anthropic.com/news/model-context-protocol" }, { "title": "modelcontextprotocol.io", "url": "https://modelcontextprotocol.io/" }] },
+            { "task": "Take Anthropic Academy's 'Introduction to MCP' course.", "resources": [{ "title": "Anthropic Academy: Introduction to MCP", "url": "https://anthropic.skilljar.com/introduction-to-model-context-protocol" }] },
+            { "task": "Do the DeepLearning.AI MCP course: build a server and a client.", "resources": [{ "title": "DeepLearning.AI: MCP with Anthropic", "url": "https://www.deeplearning.ai/short-courses/mcp-build-rich-context-ai-apps-with-anthropic/" }, { "title": "Hugging Face: MCP course", "url": "https://huggingface.co/learn/mcp-course/unit0/introduction" }] },
+            { "task": "Build an MCP server for an API you use at work or daily (Jira, Notion, Linear, Google Sheets) and connect it to Claude Code.", "resources": [{ "title": "Claude docs: Remote MCP servers", "url": "https://platform.claude.com/docs/en/agents-and-tools/remote-mcp-servers" }] },
+            { "task": "Read 'Code execution with MCP' and 'Advanced tool use' for how to scale to many tools.", "resources": [{ "title": "Anthropic: Code execution with MCP", "url": "https://www.anthropic.com/engineering/code-execution-with-mcp" }, { "title": "Anthropic: Advanced tool use", "url": "https://www.anthropic.com/engineering/advanced-tool-use" }] }
+          ],
+          "challenge": "Publish your MCP server on GitHub with a README and a demo GIF."
+        },
+        {
+          "title": "Claude Agent SDK and Claude Code as a platform",
+          "tasks": [
+            { "task": "Read the Agent SDK overview and build the quickstart agent.", "resources": [{ "title": "Claude docs: Agent SDK overview", "url": "https://platform.claude.com/docs/en/agent-sdk/overview" }] },
+            { "task": "Take 'Claude Code in Action' and read the best practices post.", "resources": [{ "title": "Anthropic Academy: Claude Code in Action", "url": "https://anthropic.skilljar.com/claude-code-in-action" }, { "title": "Anthropic: Claude Code best practices", "url": "https://www.anthropic.com/engineering/claude-code-best-practices" }] },
+            { "task": "Subagents and hooks: add a subagent and a pre-tool-use hook that blocks writes outside one folder.", "resources": [{ "title": "Claude Code docs: Subagents", "url": "https://code.claude.com/docs/en/sub-agents" }, { "title": "Claude Code docs: Hooks", "url": "https://code.claude.com/docs/en/hooks" }] },
+            { "task": "Agent Skills: package a repeatable workflow (for example 'write a customer weekly update') as a skill.", "resources": [{ "title": "Anthropic: Equipping agents with Agent Skills", "url": "https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills" }] },
+            { "task": "Run Claude headless in CI with the GitHub Action.", "resources": [{ "title": "Claude Code docs: Headless mode", "url": "https://code.claude.com/docs/en/headless" }, { "title": "Claude Code docs: GitHub Actions", "url": "https://code.claude.com/docs/en/github-actions" }] }
+          ],
+          "challenge": "Build a GitHub Action that triages new issues (label, priority, suggested owner) using the Agent SDK."
+        },
+        {
+          "title": "Context engineering, memory and security",
+          "tasks": [
+            { "task": "Read 'Effective context engineering for AI agents'. Audit what your agent puts in context and cut 30%.", "resources": [{ "title": "Anthropic: Effective context engineering", "url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" }] },
+            { "task": "Long-running agents: read the harness post and add progress notes and a resume-from-checkpoint to your agent.", "resources": [{ "title": "Anthropic: Harnesses for long-running agents", "url": "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents" }] },
+            { "task": "Prompt injection and the lethal trifecta. Write which of your agents have all three legs.", "resources": [{ "title": "Simon Willison: The lethal trifecta", "url": "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/" }, { "title": "Simon Willison: prompt injection series", "url": "https://simonwillison.net/tags/prompt-injection/" }] },
+            { "task": "OWASP Top 10 for LLM apps: map each risk to a control you'd propose to an enterprise security team.", "resources": [{ "title": "OWASP Top 10 for LLM Applications", "url": "https://genai.owasp.org/llm-top-10/" }] },
+            { "task": "Guardrails and sandboxing: read how Claude Code sandboxes tools and Anthropic's jailbreak mitigation guide.", "resources": [{ "title": "Anthropic: Claude Code sandboxing", "url": "https://www.anthropic.com/engineering/claude-code-sandboxing" }, { "title": "Claude docs: Mitigate jailbreaks", "url": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks" }] }
+          ],
+          "challenge": "Red-team your own agent: find 3 injection paths and fix them. Write it up as a security note a customer CISO would accept."
+        },
+        {
+          "title": "Enterprise deployment: cloud, auth, observability",
+          "tasks": [
+            { "task": "Claude on AWS Bedrock: take the course and call Claude through Bedrock with IAM credentials.", "resources": [{ "title": "Anthropic Academy: Claude with Amazon Bedrock", "url": "https://anthropic.skilljar.com/claude-in-amazon-bedrock" }, { "title": "AWS IAM user guide", "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html" }] },
+            { "task": "OAuth 2.0 end to end (authorization code flow, refresh tokens, scopes). Most customer integrations start here.", "resources": [{ "title": "OAuth 2.0 Simplified", "url": "https://www.oauth.com/" }] },
+            { "task": "Webhooks done right: signatures, retries, idempotent handlers.", "resources": [{ "title": "Stripe docs: Webhooks", "url": "https://docs.stripe.com/webhooks" }] },
+            { "task": "Tracing for agents: OpenTelemetry GenAI conventions, then instrument your agent with Langfuse.", "resources": [{ "title": "OpenTelemetry: GenAI semantic conventions", "url": "https://opentelemetry.io/docs/specs/semconv/gen-ai/" }, { "title": "Langfuse docs", "url": "https://langfuse.com/docs" }] },
+            { "task": "Containerize your agent with Docker and run it as a queue worker so a 10-minute task survives a restart.", "resources": [{ "title": "Docker: Get started", "url": "https://docs.docker.com/get-started/" }, { "title": "Hello Interview: Long Running Tasks", "url": "https://www.hellointerview.com/learn/system-design/patterns/long-running-tasks" }] }
+          ],
+          "challenge": "Deploy your agent to AWS behind a queue with tracing and a cost, latency and success dashboard."
+        },
+        {
+          "title": "Build: an agent inside a real workflow",
+          "tasks": [
+            { "task": "Pick a workflow (support triage in Zendesk, sales research into a CRM, incident summaries into Slack). Write the brief and the success metric first.", "resources": [{ "title": "Slack API docs", "url": "https://api.slack.com/" }, { "title": "Jira Cloud REST API", "url": "https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/" }] },
+            { "task": "Design the evals before the agent: 30 realistic tasks with expected outcomes.", "resources": [{ "title": "Anthropic: Demystifying evals for AI agents", "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents" }] },
+            { "task": "Build the core loop and the integration with OAuth.", "resources": [{ "title": "OAuth 2.0 Simplified", "url": "https://www.oauth.com/" }] },
+            { "task": "Add human approval for risky actions and a kill switch.", "resources": [{ "title": "Anthropic: Building effective agents", "url": "https://www.anthropic.com/engineering/building-effective-agents" }] },
+            { "task": "Run 100 tasks, report the success rate honestly, record a demo and write the case study.", "resources": [{ "title": "Hamel: A field guide to improving AI products", "url": "https://hamel.dev/blog/posts/field-guide/" }] }
+          ],
+          "challenge": "Phase capstone: publish the agent case study and demo it to someone non-technical."
+        }
       ]
     },
     {
@@ -54,14 +257,75 @@
       "title": "The forward deployed role",
       "months": "Mar 15 to Apr 25",
       "tag": "fde",
+      "why": "FDEs are hired for judgment with customers as much as for code. This phase turns your projects into customer stories and gets you interviewing.",
       "gate": "Two customer-style case studies on this site and 10 applications out.",
       "weeks": [
-        { "title": "What FDEs do, and customer discovery", "tasks": ["Read 10 FDE job descriptions (Anthropic, OpenAI, Palantir, Scale, startups)", "Palantir's 'Dev versus Delta' post", "Rate yourself on the skills that repeat", "Asking good discovery questions and mapping a workflow", "Interview a friend about a painful workflow at their job"], "challenge": "Write your 'why FDE' story in 200 words." },
-        { "title": "Scoping, design docs and demos", "tasks": ["Pilot vs production: what to promise", "Write a 2-page pilot proposal with milestones and risks", "Write a solution design doc for engineers and executives", "Structure a 10-minute demo", "Handling security review questions"], "challenge": "Record a 10-minute demo of your phase 3 agent for a pretend customer." },
-        { "title": "Case study 1", "tasks": ["Pick an industry (insurance claims, legal intake, logistics)", "Research their workflows and data", "Design the solution and its evals", "Build the prototype", "Measure impact and write it up"], "challenge": "Publish case study 1." },
-        { "title": "Case study 2", "tasks": ["Pick a different industry", "Research workflows", "Design the solution and its evals", "Build the prototype", "Measure impact and write it up"], "challenge": "Publish case study 2." },
-        { "title": "Interview prep", "tasks": ["Design an enterprise RAG system out loud", "Design an LLM gateway with routing and caching", "Practical coding: build small things fast", "8 STAR stories: ambiguity, conflict, customer, failure", "Decomposition interviews (Palantir style)"], "challenge": "Do 2 mock interviews with a peer." },
-        { "title": "Applications and retrospective", "tasks": ["Polish resume around customer impact", "Update LinkedIn and this site's portfolio", "Send 10 applications", "Reach out to 5 people for referrals", "Write the 6-month retrospective"], "challenge": "10 applications sent and your retrospective published on this site." }
+        {
+          "title": "What FDEs do, and customer discovery",
+          "tasks": [
+            { "task": "Read the Pragmatic Engineer deep dive on FDEs and Palantir's 'Dev versus Delta'.", "resources": [{ "title": "Pragmatic Engineer: What are Forward Deployed Engineers", "url": "https://newsletter.pragmaticengineer.com/p/forward-deployed-engineers" }, { "title": "Palantir: Dev versus Delta", "url": "https://blog.palantir.com/dev-versus-delta-demystifying-engineering-roles-at-palantir-ad44c2a6e87" }] },
+            { "task": "Read the analysis of 1,000 FDE job posts. Rate yourself 1 to 5 on the top 10 skills and pick your 2 weakest.", "resources": [{ "title": "Bloomberry: 1,000 FDE jobs analyzed", "url": "https://bloomberry.com/blog/i-analyzed-1000-forward-deployed-engineer-jobs/" }] },
+            { "task": "Read The Mom Test summary: how to ask customers questions that don't lie to you.", "resources": [{ "title": "The Mom Test", "url": "https://www.momtestbook.com/" }] },
+            { "task": "Interview a friend for 30 minutes about a painful workflow at their job. Map it as steps, tools and handoffs.", "resources": [{ "title": "The Mom Test", "url": "https://www.momtestbook.com/" }] },
+            { "task": "Write your 'why FDE' story in 200 words, tied to things you've built.", "resources": [{ "title": "Pragmatic Engineer: What are Forward Deployed Engineers", "url": "https://newsletter.pragmaticengineer.com/p/forward-deployed-engineers" }] }
+          ],
+          "challenge": "Turn your friend interview into a one-page problem statement with a success metric."
+        },
+        {
+          "title": "Scoping, design docs and demos",
+          "tasks": [
+            { "task": "Read Shape Up chapters on shaping and setting appetite. Scope a 4-week pilot for your friend's workflow.", "resources": [{ "title": "Basecamp: Shape Up", "url": "https://basecamp.com/shapeup" }] },
+            { "task": "Read 'Design Docs at Google' and write a solution design doc for the pilot.", "resources": [{ "title": "Design Docs at Google", "url": "https://www.industrialempathy.com/posts/design-docs-at-google/" }] },
+            { "task": "Add the security and data-handling section an enterprise would ask for (data flow, retention, access, model provider).", "resources": [{ "title": "OWASP Top 10 for LLM Applications", "url": "https://genai.owasp.org/llm-top-10/" }] },
+            { "task": "Plan a 10-minute demo: problem, before, after, metric, ask. Rehearse it out loud twice.", "resources": [{ "title": "Karpathy: Software Is Changing (Again)", "url": "https://www.youtube.com/watch?v=LCEmiRjPEtQ" }] },
+            { "task": "Record the demo of your phase 3 agent for a pretend customer and watch it back.", "resources": [{ "title": "Pragmatic Engineer: What are Forward Deployed Engineers", "url": "https://newsletter.pragmaticengineer.com/p/forward-deployed-engineers" }] }
+          ],
+          "challenge": "Publish the pilot proposal and design doc on this site."
+        },
+        {
+          "title": "Case study 1: an industry workflow end to end",
+          "tasks": [
+            { "task": "Pick an industry FDEs serve (insurance claims, logistics, legal intake, healthcare ops). Research their workflow and data from public sources.", "resources": [{ "title": "Bloomberry: 1,000 FDE jobs analyzed", "url": "https://bloomberry.com/blog/i-analyzed-1000-forward-deployed-engineer-jobs/" }] },
+            { "task": "Write the problem statement, success metric and evals (20 cases).", "resources": [{ "title": "Hamel & Shreya: LLM Evals FAQ", "url": "https://hamel.dev/blog/posts/evals-faq/" }] },
+            { "task": "Build the prototype (extraction plus agent plus integration).", "resources": [{ "title": "Claude docs: Structured outputs", "url": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs" }] },
+            { "task": "Run evals, fix the top failure, measure impact against the metric.", "resources": [{ "title": "Hamel: A field guide to improving AI products", "url": "https://hamel.dev/blog/posts/field-guide/" }] },
+            { "task": "Write it up as a customer story: situation, approach, result, what you'd do in production.", "resources": [{ "title": "Design Docs at Google", "url": "https://www.industrialempathy.com/posts/design-docs-at-google/" }] }
+          ],
+          "challenge": "Publish case study 1."
+        },
+        {
+          "title": "Case study 2: a different customer",
+          "tasks": [
+            { "task": "Pick a contrasting industry or a contrasting constraint (on-prem data, strict compliance). Research it.", "resources": [{ "title": "Anthropic Academy: Claude with Amazon Bedrock", "url": "https://anthropic.skilljar.com/claude-in-amazon-bedrock" }] },
+            { "task": "Write the problem statement, metric and evals.", "resources": [{ "title": "Hamel & Shreya: LLM Evals FAQ", "url": "https://hamel.dev/blog/posts/evals-faq/" }] },
+            { "task": "Build the prototype.", "resources": [{ "title": "Anthropic: Building effective agents", "url": "https://www.anthropic.com/engineering/building-effective-agents" }] },
+            { "task": "Run evals and measure impact.", "resources": [{ "title": "Anthropic: Demystifying evals for AI agents", "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents" }] },
+            { "task": "Write it up and record a 5-minute demo.", "resources": [{ "title": "Design Docs at Google", "url": "https://www.industrialempathy.com/posts/design-docs-at-google/" }] }
+          ],
+          "challenge": "Publish case study 2."
+        },
+        {
+          "title": "Interview prep: decomposition, AI system design, coding",
+          "tasks": [
+            { "task": "Read the Palantir FDE interview guide and the decomposition guide. Practice 2 decomposition prompts out loud.", "resources": [{ "title": "Exponent: Palantir FDE interview guide", "url": "https://www.tryexponent.com/guides/palantir-forward-deployed-engineer-interview" }, { "title": "Exponent: Decomposition interview guide", "url": "https://www.tryexponent.com/blog/how-to-answer-decomposition-interview-questions-the-definitive-guide-2026" }] },
+            { "task": "AI system design: design an enterprise RAG assistant for 10,000 employees with access control. Out loud, 45 minutes.", "resources": [{ "title": "Hello Interview: ChatGPT breakdown", "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/chatgpt" }, { "title": "Hello Interview: Vector Databases", "url": "https://www.hellointerview.com/learn/system-design/deep-dives/vector-databases" }] },
+            { "task": "AI system design: design an LLM gateway (routing, caching, rate limits, cost tracking, fallbacks).", "resources": [{ "title": "LiteLLM docs (a real gateway to study)", "url": "https://docs.litellm.ai/" }] },
+            { "task": "Practical coding: build a small CRUD API plus an LLM call in 60 minutes, timed.", "resources": [{ "title": "Tech Interview Handbook", "url": "https://www.techinterviewhandbook.org/" }] },
+            { "task": "Write 8 STAR stories: ambiguity, conflict, customer pressure, failure, ownership, speed, influence, learning.", "resources": [{ "title": "Tech Interview Handbook: Behavioral", "url": "https://www.techinterviewhandbook.org/behavioral-interview/" }] }
+          ],
+          "challenge": "Do 2 mock interviews with a peer (one decomposition, one AI system design)."
+        },
+        {
+          "title": "Applications and retrospective",
+          "tasks": [
+            { "task": "Rewrite your resume around customer impact and shipped AI systems.", "resources": [{ "title": "Tech Interview Handbook: Resume", "url": "https://www.techinterviewhandbook.org/resume/" }] },
+            { "task": "Update LinkedIn and link this site's case studies.", "resources": [{ "title": "Bloomberry: 1,000 FDE jobs analyzed", "url": "https://bloomberry.com/blog/i-analyzed-1000-forward-deployed-engineer-jobs/" }] },
+            { "task": "Send 10 applications to FDE roles at AI labs and AI-first startups.", "resources": [{ "title": "Pragmatic Engineer: What are Forward Deployed Engineers", "url": "https://newsletter.pragmaticengineer.com/p/forward-deployed-engineers" }] },
+            { "task": "Reach out to 5 FDEs for a 15-minute chat or referral, with a link to your best case study.", "resources": [{ "title": "Tech Interview Handbook", "url": "https://www.techinterviewhandbook.org/" }] },
+            { "task": "Write the 6-month retrospective: what worked, what you'd skip, what's next.", "resources": [] }
+          ],
+          "challenge": "10 applications sent and your retrospective published on this site."
+        }
       ]
     }
   ]

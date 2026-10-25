@@ -106,17 +106,26 @@ function todaysRead() {
   return list.length ? { ...list[Math.abs(dayNumber()) % list.length], date: today(), pickedBy: "classic" } : null;
 }
 
+// Tasks are { task, resources: [{ title, url }] }; plain strings still work.
+const taskText = (t) => (typeof t === "string" ? t : t.task);
+const taskResources = (t) => (typeof t === "string" ? [] : t.resources || []);
+const resourceLinks = (list, cls = "resources") => list.length
+  ? `<div class="${cls}">${list.map((r) => `<a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.title)}</a>`).join("")}</div>`
+  : "";
+
 function todaysFocus(w) {
   const dow = new Date().getDay(); // 0 Sunday, 6 Saturday
   if (dow === 6) return { kind: "Challenge day", text: w.challenge };
   if (dow === 0) {
-    const open = w.tasks.filter((_, i) => !state.tasks[taskId(w, i)]);
-    return { kind: "Review day", text: open.length ? `Catch up: ${open[0]}` : "Review the week, write your notes, and catch up on reads." };
+    const i = w.tasks.findIndex((_, i) => !state.tasks[taskId(w, i)]);
+    return i === -1
+      ? { kind: "Review day", text: "Review the week, write your notes, and catch up on reads." }
+      : { kind: "Review day", text: `Catch up: ${taskText(w.tasks[i])}`, index: i, resources: taskResources(w.tasks[i]) };
   }
   const i = w.tasks.findIndex((_, i) => !state.tasks[taskId(w, i)]);
   return i === -1
     ? { kind: "Ahead of schedule", text: `All of this week's tasks are done. Start the challenge: ${w.challenge}` }
-    : { kind: "Today's task", text: w.tasks[i], index: i };
+    : { kind: "Today's task", text: taskText(w.tasks[i]), index: i, resources: taskResources(w.tasks[i]) };
 }
 
 // ---------- views ----------
@@ -150,6 +159,7 @@ function viewToday() {
         <div class="card focus">
           <div class="eyebrow">${focus.kind} · Week ${w.n}: ${esc(w.title)}</div>
           <div class="task">${esc(focus.text)}</div>
+          ${focus.resources?.length ? `<div class="eyebrow" style="margin-top:.25rem">Learn it from</div>${resourceLinks(focus.resources)}` : ""}
           <div class="row">
             ${focus.index !== undefined ? `<button class="btn ghost" data-task="${taskId(w, focus.index)}">Mark task done</button>` : ""}
             <a href="#roadmap">See the full week</a>
@@ -211,12 +221,13 @@ function viewRoadmap() {
           <div class="progress" style="margin-top:.6rem"><span style="width:${(done / total) * 100}%"></span></div>
         </summary>
         <div class="phase-body">
+          ${phase.why ? `<p class="muted" style="margin:0 0 .6rem">${esc(phase.why)}</p>` : ""}
           <div class="gate"><strong>Gate:</strong> ${esc(phase.gate)}</div>
           ${pw.map((w) => `
             <div class="week ${w === cur ? "current" : ""}" id="${w.id}">
               <div class="week-head"><strong>Week ${w.n}: ${esc(w.title)}</strong>${w === cur ? '<span class="pill accent">This week</span>' : ""}${weekDone(w) === w.tasks.length ? '<span class="pill good">Done</span>' : ""}<span class="muted small">${fmtDate(localISO(addDays(parseDay(roadmap.startDate), (w.n - 1) * 7)))}</span></div>
               <ul class="checklist">
-                ${w.tasks.map((t, i) => { const id = taskId(w, i); return `<li><input type="checkbox" id="${id}" data-task="${id}" ${state.tasks[id] ? "checked" : ""}><label for="${id}" class="${state.tasks[id] ? "done" : ""}">${esc(t)}</label></li>`; }).join("")}
+                ${w.tasks.map((t, i) => { const id = taskId(w, i); return `<li><input type="checkbox" id="${id}" data-task="${id}" ${state.tasks[id] ? "checked" : ""}><div><label for="${id}" class="${state.tasks[id] ? "done" : ""}">${esc(taskText(t))}</label>${resourceLinks(taskResources(t))}</div></li>`; }).join("")}
                 <li><span class="pill">Sat</span><span class="small">${esc(w.challenge)}</span></li>
               </ul>
             </div>`).join("")}
