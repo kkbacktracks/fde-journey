@@ -128,6 +128,12 @@ textarea { min-height: 88px; resize: vertical; }
 .tag.system-design { color: var(--p1); }
 .tag.ai { color: var(--p2); }
 .tag.fde { color: var(--p4); }
+.tag.thinking { color: var(--p1); }
+.tag.philosophy { color: var(--p3); }
+.tag.creativity { color: var(--signal); }
+.tag.intelligence { color: var(--p2); }
+.tag.travel { color: var(--p4); }
+.tag.tech { color: var(--muted); }
 .tag.signal { color: var(--signal-ink); background: var(--signal); border-color: var(--signal); }
 .tag.good { color: var(--good); }
 

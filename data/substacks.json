@@ -1,80 +1,34 @@
 [
-  {
-    "name": "The Pragmatic Engineer",
-    "url": "https://newsletter.pragmaticengineer.com/feed",
-    "tag": "system-design",
-    "weight": 1.2
-  },
-  {
-    "name": "ByteByteGo",
-    "url": "https://blog.bytebytego.com/feed",
-    "tag": "system-design",
-    "weight": 1.0
-  },
-  {
-    "name": "System Design One",
-    "url": "https://newsletter.systemdesign.one/feed",
-    "tag": "system-design",
-    "weight": 1.0
-  },
-  {
-    "name": "Refactoring",
-    "url": "https://refactoring.fm/feed",
-    "tag": "system-design",
-    "weight": 0.9
-  },
-  {
-    "name": "Latent Space",
-    "url": "https://www.latent.space/feed",
-    "tag": "ai",
-    "weight": 1.1
-  },
-  {
-    "name": "Interconnects",
-    "url": "https://www.interconnects.ai/feed",
-    "tag": "ai",
-    "weight": 1.0
-  },
-  {
-    "name": "Ahead of AI",
-    "url": "https://magazine.sebastianraschka.com/feed",
-    "tag": "ai",
-    "weight": 1.1
-  },
-  {
-    "name": "One Useful Thing",
-    "url": "https://www.oneusefulthing.org/feed",
-    "tag": "ai",
-    "weight": 1.0
-  },
-  {
-    "name": "Lenny's Newsletter",
-    "url": "https://www.lennysnewsletter.com/feed",
-    "tag": "fde",
-    "weight": 0.9
-  },
-  {
-    "name": "High Growth Engineer",
-    "url": "https://read.highgrowthengineer.com/feed",
-    "tag": "fde",
-    "weight": 0.9
-  },
-  {
-    "name": "Understanding AI",
-    "url": "https://www.understandingai.org/feed",
-    "tag": "ai",
-    "weight": 1.0
-  },
-  {
-    "name": "Artificial Ignorance",
-    "url": "https://www.ignorance.ai/feed",
-    "tag": "ai",
-    "weight": 1.0
-  },
-  {
-    "name": "Import AI",
-    "url": "https://jack-clark.net/feed/",
-    "tag": "ai",
-    "weight": 0.8
-  }
+  { "name": "Experimental History", "url": "https://www.experimental-history.com/feed", "tag": "thinking", "weight": 1.2 },
+  { "name": "Escaping Flatland", "url": "https://www.henrikkarlsson.xyz/feed", "tag": "thinking", "weight": 1.2 },
+  { "name": "The Prism", "url": "https://www.gurwinder.blog/feed", "tag": "thinking", "weight": 1.0 },
+  { "name": "The Ruffian", "url": "https://www.ian-leslie.com/feed", "tag": "thinking", "weight": 1.0 },
+  { "name": "Joan Westenberg", "url": "https://www.joanwestenberg.com/feed", "tag": "thinking", "weight": 0.8 },
+  { "name": "Farnam Street", "url": "https://fs.blog/feed/", "tag": "thinking", "weight": 0.8, "fullText": false },
+  { "name": "Psyche", "url": "https://psyche.co/feed", "tag": "thinking", "weight": 0.9, "fullText": false },
+
+  { "name": "The Intrinsic Perspective", "url": "https://www.theintrinsicperspective.com/feed", "tag": "philosophy", "weight": 1.2 },
+  { "name": "Contraptions", "url": "https://contraptions.venkateshrao.com/feed", "tag": "philosophy", "weight": 0.9 },
+  { "name": "Noema", "url": "https://www.noemamag.com/feed/", "tag": "philosophy", "weight": 1.0 },
+  { "name": "Aeon", "url": "https://aeon.co/feed.rss", "tag": "philosophy", "weight": 1.0, "fullText": false },
+  { "name": "The Point", "url": "https://thepointmag.com/feed/", "tag": "philosophy", "weight": 0.9, "fullText": false },
+
+  { "name": "The Marginalian", "url": "https://www.themarginalian.org/feed", "tag": "creativity", "weight": 1.2 },
+  { "name": "The Honest Broker", "url": "https://www.honest-broker.com/feed", "tag": "creativity", "weight": 1.0 },
+  { "name": "Personal Canon", "url": "https://www.personalcanon.com/feed", "tag": "creativity", "weight": 1.0 },
+  { "name": "The Elysian", "url": "https://www.elysian.press/feed", "tag": "creativity", "weight": 0.9 },
+  { "name": "Austin Kleon", "url": "https://austinkleon.com/feed/", "tag": "creativity", "weight": 0.8, "fullText": false },
+
+  { "name": "Astral Codex Ten", "url": "https://www.astralcodexten.com/feed", "tag": "intelligence", "weight": 1.1 },
+  { "name": "Dwarkesh", "url": "https://www.dwarkesh.com/feed", "tag": "intelligence", "weight": 1.0 },
+  { "name": "Strange Loop Canon", "url": "https://www.strangeloopcanon.com/feed", "tag": "intelligence", "weight": 1.0 },
+  { "name": "One Useful Thing", "url": "https://www.oneusefulthing.org/feed", "tag": "intelligence", "weight": 1.0 },
+  { "name": "Understanding AI", "url": "https://www.understandingai.org/feed", "tag": "intelligence", "weight": 0.9 },
+
+  { "name": "Craig Mod", "url": "https://craigmod.com/index.xml", "tag": "travel", "weight": 1.2, "fullText": false },
+  { "name": "Rolf Potts", "url": "https://rolfpotts.com/feed/", "tag": "travel", "weight": 1.0, "fullText": false },
+  { "name": "Emergence Magazine", "url": "https://emergencemagazine.org/feed/", "tag": "travel", "weight": 1.0, "fullText": false },
+
+  { "name": "The Pragmatic Engineer", "url": "https://newsletter.pragmaticengineer.com/feed", "tag": "tech", "weight": 1.0 },
+  { "name": "Latent Space", "url": "https://www.latent.space/feed", "tag": "tech", "weight": 0.9 }
 ]

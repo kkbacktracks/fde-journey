@@ -56,6 +56,7 @@ function parseFeed(xml, feed) {
       source: feed.name,
       tag: feed.tag,
       weight: feed.weight ?? 1,
+      fullText: feed.fullText,
       length: body.length,
     };
   }).filter((x) => x.title && x.url?.startsWith("http"));
@@ -64,19 +65,20 @@ function parseFeed(xml, feed) {
 const KEYWORDS = /\b(agent|agents|eval|evals|rag|retrieval|llm|prompt|mcp|claude|inference|embedding|fine-tun|distributed|scal|database|architecture|consisten|queue|cache|latency|reliab|postmortem|migration|system design)/i;
 
 // News digests, podcasts and link lists are rarely worth a focused hour.
-const ROUNDUP = /\b(podcast|episode|roundup|round-up|links|this week|weekly|digest|issue #?\d+|#\d+|ep\d+|sponsor|giveaway|announcing|hiring)\b/i;
+const ROUNDUP = /\b(podcast|episode|roundup|round-up|links|this week|weekly|digest|issue #?\d+|#\d+|ep\d+|sponsor|giveaway|announcing|hiring|open thread|mailbag|ama|ask me anything|comments)\b/i;
 
-function score(item, phaseTag) {
+// phaseTag is null for the Substack pick, which follows Kaustubh's interests rather than the roadmap.
+function score(item, phaseTag, windowDays) {
   const ageDays = (Date.now() - Date.parse(item.published)) / 86400000;
-  let s = item.weight * Math.max(0.2, 1 - ageDays / 21);
-  if (item.tag === phaseTag || (phaseTag === "fde" && item.tag === "ai")) s *= 1.3;
-  if (KEYWORDS.test(item.title + " " + item.summary)) s *= 1.4;
+  let s = item.weight * Math.max(0.2, 1 - ageDays / windowDays);
+  if (phaseTag && (item.tag === phaseTag || (phaseTag === "fde" && item.tag === "ai"))) s *= 1.3;
+  if (phaseTag && KEYWORDS.test(item.title + " " + item.summary)) s *= 1.4;
   if (item.title.length < 20) s *= 0.7; // short link posts are rarely deep reads
   if (ROUNDUP.test(item.title)) s *= 0.4;
   return s;
 }
 
-async function askClaude(candidates, phase, week, kind) {
+async function askClaude(candidates, brief, kind) {
   if (!process.env.ANTHROPIC_API_KEY) return null;
   const { default: Anthropic } = await import("@anthropic-ai/sdk");
   const { zodOutputFormat } = await import("@anthropic-ai/sdk/helpers/zod");
@@ -90,7 +92,7 @@ async function askClaude(candidates, phase, week, kind) {
     output_config: { effort: "low", format: zodOutputFormat(Pick) },
     messages: [{
       role: "user",
-      content: `I'm a software engineer with 4+ years of experience studying to become a forward deployed engineer. This week I'm in the "${phase.title}" phase, studying "${week.title}". Pick the ONE ${kind} below that is most worth an hour of my time today: substantive, practical, not news or a link roundup. Prefer pieces relevant to my current phase. Return its index and a two-sentence "why read this" addressed to me.\n\n${list}`,
+      content: `${brief} Pick the ONE ${kind} below that is most worth my time today. Return its index and a two-sentence "why read this" addressed to me.\n\n${list}`,
     }],
   });
   const pick = response.parsed_output;
@@ -106,7 +108,8 @@ async function isReachable(url) {
 }
 
 // One pick a day from a list of feeds. Used for the daily read (blogs) and the Substack of the day.
-async function pickDaily(roadmap, { label, kind, picksFile, feedsFile, seedsFile, windowDays = 21, minLength = 0 }) {
+// With rotateTopics, each day favours the next topic (the feeds' tags, in file order) instead of the roadmap phase.
+async function pickDaily(roadmap, { label, kind, picksFile, feedsFile, seedsFile, windowDays = 21, minLength = 0, rotateTopics = false }) {
   const reads = await readJson(picksFile, []);
   if (reads.some((r) => r.date === today)) {
     console.log(`${label}: already picked for ${today}`);
@@ -116,20 +119,30 @@ async function pickDaily(roadmap, { label, kind, picksFile, feedsFile, seedsFile
   const seeds = seedsFile ? await readJson(seedsFile, []) : [];
   const seen = new Set(reads.map((r) => r.url));
   const { phase, week } = currentPhase(roadmap);
+  const topics = [...new Set(feeds.map((f) => f.tag))];
+  const topic = rotateTopics ? topics[Math.floor(Date.parse(today) / 86400000) % topics.length] : null;
+  const brief = rotateTopics
+    ? `I'm a software engineer who reads deep essays for pleasure: philosophy, creativity, intelligence, travel and slow travel, and how to think well. Today's theme is "${topic}". Prefer a thoughtful, original long-form essay on that theme; skip news, announcements, link roundups, comment threads and podcast show notes.`
+    : `I'm a software engineer with 4+ years of experience studying to become a forward deployed engineer. This week I'm in the "${phase.title}" phase, studying "${week.title}". Prefer a substantive, practical piece relevant to my current phase; skip news and link roundups.`;
 
   const results = await Promise.allSettled(feeds.map(async (f) => parseFeed(await fetchText(f.url), f)));
   results.forEach((r, i) => r.status === "rejected" && console.warn(`${label} feed failed: ${feeds[i].name}: ${r.reason.message}`));
   results.forEach((r, i) => r.status === "fulfilled" && !r.value.length && console.warn(`${label} feed empty: ${feeds[i].name}`));
   const fresh = results.flatMap((r) => (r.status === "fulfilled" ? r.value : []))
     // minLength skips teaser-only items, which on Substack usually means a paywalled post.
-    .filter((x) => x.published && !seen.has(x.url) && x.length >= minLength && Date.now() - Date.parse(x.published) < windowDays * 86400000)
-    .map((x) => ({ ...x, score: score(x, phase.tag) }))
+    // Feeds marked fullText: false only ever carry summaries, so the length check doesn't apply to them.
+    .filter((x) => x.published && !seen.has(x.url) && (x.fullText === false || x.length >= minLength) && Date.now() - Date.parse(x.published) < windowDays * 86400000)
+    .map((x) => ({ ...x, score: score(x, rotateTopics ? null : phase.tag, windowDays) }))
     .sort((a, b) => b.score - a.score);
+  // Today's topic first; other topics only if it has nothing new.
+  const onTopic = topic ? fresh.filter((x) => x.tag === topic) : [];
+  const pool = onTopic.length ? onTopic : fresh;
+  if (topic) console.log(`${label}: today's topic is ${topic} (${onTopic.length} fresh posts)`);
 
   let pick = null;
-  if (fresh.length) {
-    try { pick = await askClaude(fresh.slice(0, 15), phase, week, kind); } catch (e) { console.warn(`claude pick failed: ${e.message}`); }
-    pick ??= { ...fresh[0], why: `Top-ranked new post from ${fresh[0].source} this week.`, pickedBy: "score" };
+  if (pool.length) {
+    try { pick = await askClaude(pool.slice(0, 15), brief, kind); } catch (e) { console.warn(`claude pick failed: ${e.message}`); }
+    pick ??= { ...pool[0], why: `Top-ranked new post from ${pool[0].source}.`, pickedBy: "score" };
   }
   if (!pick) {
     // Quiet day: fall back to an unread classic, preferring the current phase's topic.
@@ -187,5 +200,5 @@ async function updateChangelog() {
 
 const roadmap = await readJson("roadmap.json");
 await pickDaily(roadmap, { label: "read", kind: "article", picksFile: "reads.json", feedsFile: "feeds.json", seedsFile: "seed-reads.json" });
-await pickDaily(roadmap, { label: "substack", kind: "Substack post", picksFile: "substack-reads.json", feedsFile: "substacks.json", windowDays: 30, minLength: 3000 });
+await pickDaily(roadmap, { label: "substack", kind: "Substack post", picksFile: "substack-reads.json", feedsFile: "substacks.json", windowDays: 45, minLength: 3000, rotateTopics: true });
 await updateChangelog();

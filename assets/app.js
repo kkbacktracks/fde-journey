@@ -103,7 +103,7 @@ function overallProgress() {
   const total = weeks.reduce((s, w) => s + w.tasks.length, 0);
   return total ? Object.values(state.tasks).filter(Boolean).length / total : 0;
 }
-const labelTag = (t) => ({ ai: "AI engineering", "system-design": "System design", fde: "FDE" }[t] || t || "");
+const labelTag = (t) => ({ ai: "AI engineering", "system-design": "System design", fde: "FDE", tech: "Tech" }[t] || t || "");
 
 function todaysRead() {
   const exact = reads.find((r) => r.date === today());
@@ -376,7 +376,7 @@ function viewReads() {
     <section class="page-head">
       <div class="kicker"><span class="dot"></span>${doneCount} read so far</div>
       <h1>The reading <em>desk</em></h1>
-      <p>One hand-picked article and one Substack post a day, plus the classics worth reading once.</p>
+      <p>One hand-picked article for the roadmap and one deep Substack read a day, rotating through philosophy, creativity, intelligence, travel and thinking, plus the classics worth reading once.</p>
     </section>
     <div class="tabs">
       <button data-readtab="daily" class="${readTab === "daily" ? "active" : ""}">Daily reads (${daily.length})</button>
