@@ -30,12 +30,6 @@
     "weight": 1.1
   },
   {
-    "name": "Martin Kleppmann",
-    "url": "https://martin.kleppmann.com/feed.xml",
-    "tag": "system-design",
-    "weight": 1.2
-  },
-  {
     "name": "Cloudflare Blog",
     "url": "https://blog.cloudflare.com/rss/",
     "tag": "system-design",
@@ -46,11 +40,5 @@
     "url": "https://netflixtechblog.com/feed",
     "tag": "system-design",
     "weight": 0.9
-  },
-  {
-    "name": "Uber Engineering",
-    "url": "https://www.uber.com/blog/engineering/rss/",
-    "tag": "system-design",
-    "weight": 0.8
   }
 ]
