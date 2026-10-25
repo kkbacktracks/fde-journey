@@ -27,7 +27,6 @@
 
   { "name": "Craig Mod", "url": "https://craigmod.com/index.xml", "tag": "travel", "weight": 1.2, "fullText": false },
   { "name": "Rolf Potts", "url": "https://rolfpotts.com/feed/", "tag": "travel", "weight": 1.0, "fullText": false },
-  { "name": "Emergence Magazine", "url": "https://emergencemagazine.org/feed/", "tag": "travel", "weight": 1.0, "fullText": false },
 
   { "name": "The Pragmatic Engineer", "url": "https://newsletter.pragmaticengineer.com/feed", "tag": "tech", "weight": 1.0 },
   { "name": "Latent Space", "url": "https://www.latent.space/feed", "tag": "tech", "weight": 0.9 }
