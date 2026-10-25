@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FDE Journey</title>
+  <meta name="description" content="One hour a day toward forward deployed engineer: roadmap, challenges, daily reads and the Claude changelog.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%232f6fed'/><path d='M9 22l5-12 4 8 3-5 3 9' stroke='white' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#today"><span class="logo"></span>FDE Journey</a>
+    <nav id="nav">
+      <a href="#today">Today</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#challenges">Challenges</a>
+      <a href="#log">Log</a>
+      <a href="#reads">Reads</a>
+      <a href="#changelog">Claude changelog</a>
+    </nav>
+  </header>
+
+  <main id="app" aria-live="polite"><p class="muted">Loading…</p></main>
+
+  <footer class="footer">
+    <span>Progress is saved in this browser.</span>
+    <button class="link" id="export">Export backup</button>
+    <label class="link">Import backup<input type="file" id="import" accept="application/json" hidden></label>
+  </footer>
+
+  <script src="assets/app.js" type="module"></script>
+</body>
+</html>

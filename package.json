@@ -1,0 +1,13 @@
+{
+  "name": "fde-journey",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "update": "node scripts/update-content.mjs",
+    "serve": "npx --yes serve ."
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.3.0",
+    "zod": "^4.1.0"
+  }
+}

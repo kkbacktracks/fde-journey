@@ -1,0 +1,14 @@
+[
+  { "name": "Simon Willison", "url": "https://simonwillison.net/atom/entries/", "tag": "ai", "weight": 1.0 },
+  { "name": "Eugene Yan", "url": "https://eugeneyan.com/rss/", "tag": "ai", "weight": 1.2 },
+  { "name": "Hamel Husain", "url": "https://hamel.dev/index.xml", "tag": "ai", "weight": 1.2 },
+  { "name": "Chip Huyen", "url": "https://huyenchip.com/feed.xml", "tag": "ai", "weight": 1.2 },
+  { "name": "Lilian Weng", "url": "https://lilianweng.github.io/index.xml", "tag": "ai", "weight": 1.1 },
+  { "name": "Latent Space", "url": "https://www.latent.space/feed", "tag": "ai", "weight": 0.9 },
+  { "name": "ByteByteGo", "url": "https://blog.bytebytego.com/feed", "tag": "system-design", "weight": 0.9 },
+  { "name": "Martin Kleppmann", "url": "https://martin.kleppmann.com/feed.xml", "tag": "system-design", "weight": 1.2 },
+  { "name": "Cloudflare Blog", "url": "https://blog.cloudflare.com/rss/", "tag": "system-design", "weight": 0.8 },
+  { "name": "Netflix Tech Blog", "url": "https://netflixtechblog.com/feed", "tag": "system-design", "weight": 0.9 },
+  { "name": "Uber Engineering", "url": "https://www.uber.com/blog/engineering/rss/", "tag": "system-design", "weight": 0.8 },
+  { "name": "The Pragmatic Engineer", "url": "https://newsletter.pragmaticengineer.com/feed", "tag": "system-design", "weight": 0.8 }
+]

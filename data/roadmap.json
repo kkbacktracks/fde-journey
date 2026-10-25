@@ -1,0 +1,68 @@
+{
+  "startDate": "2026-10-26",
+  "goal": "Forward deployed engineer ready by April 2027",
+  "phases": [
+    {
+      "id": "p1",
+      "title": "System design foundations",
+      "months": "Oct 26 to Dec 13",
+      "tag": "system-design",
+      "gate": "Whiteboard 6 classic designs end to end, 45 minutes each, and publish a write-up of the best one.",
+      "weeks": [
+        { "title": "Estimation, networking and load balancing", "tasks": ["Latency numbers and 3 back-of-envelope estimates (QPS, storage, bandwidth)", "Read DDIA chapter 1: reliability, scalability, maintainability", "DNS, L4 vs L7 load balancing, health checks", "Reverse proxies, API gateways and CDNs", "Vertical vs horizontal scaling for a service you know"], "challenge": "Draw the full request path for loading a product page, from DNS to database, with rough numbers at each hop." },
+        { "title": "Caching and storage engines", "tasks": ["Cache-aside, write-through, write-back; LRU, LFU, TTL", "Cache stampede and hot keys", "DDIA chapters 2 and 3: data models, B-trees vs LSM trees", "How indexes work and what they cost on writes", "Pick the right database for 5 example workloads"], "challenge": "Build a tiny LRU cache with TTL in your main language, with tests." },
+        { "title": "Replication and partitioning", "tasks": ["DDIA chapter 5: leader-follower, multi-leader, leaderless", "Replication lag, read-your-writes, quorums", "DDIA chapter 6: partitioning by range vs hash", "Consistent hashing and virtual nodes", "Rebalancing and hot partitions"], "challenge": "Implement consistent hashing with virtual nodes and measure key movement when adding a node." },
+        { "title": "Transactions and consensus", "tasks": ["DDIA chapter 7: isolation levels and their anomalies", "Optimistic vs pessimistic locking; 2PC and sagas", "CAP and PACELC without the myths", "Raft: leader election and log replication (raft.github.io)", "Distributed locks and fencing tokens (Kleppmann)"], "challenge": "Design the money transfer flow for a wallet app using a saga, including failure handling." },
+        { "title": "Messaging, APIs and rate limiting", "tasks": ["Queues vs logs: SQS vs Kafka; delivery semantics", "Idempotency keys, outbox pattern, dead letter queues", "REST vs gRPC, pagination, versioning", "Rate limiting: token bucket and sliding window", "OAuth 2.0 and JWTs"], "challenge": "Implement a sliding-window rate limiter backed by Redis." },
+        { "title": "Reliability and observability", "tasks": ["SLIs, SLOs and error budgets (Google SRE book)", "Metrics, logs and traces, and what each answers", "Timeouts, retries with jitter, circuit breakers", "Graceful degradation and load shedding", "Read a public postmortem and summarize the root cause"], "challenge": "Write an SLO doc for a service you've worked on, with alerts and an error budget policy." },
+        { "title": "Design practice and phase review", "tasks": ["Design a URL shortener", "Design a news feed", "Design a chat system", "Design a payment system", "Design a distributed rate limiter"], "challenge": "Phase capstone: record one design in 45 minutes, then publish your best design as a write-up with diagrams." }
+      ]
+    },
+    {
+      "id": "p2",
+      "title": "LLM application engineering",
+      "months": "Dec 14 to Jan 31",
+      "tag": "ai",
+      "gate": "Ship a RAG app with an eval suite and a written cost and latency model.",
+      "weeks": [
+        { "title": "How LLMs work and the Claude API", "tasks": ["Tokens, context windows and sampling", "The Illustrated Transformer (Jay Alammar)", "Messages API, system prompts, multi-turn and streaming", "Errors, retries and rate limits", "Make your first 10 calls with the SDK"], "challenge": "Build a CLI that summarizes any URL using the Claude API, with streaming output." },
+        { "title": "Prompting, tool use and structured output", "tasks": ["Read Anthropic's prompt engineering guide end to end", "Structure prompts with XML tags and examples", "Tool use: defining tools and handling tool calls", "Structured output with JSON schemas", "Designing tools an LLM can use well"], "challenge": "Build a small assistant that can call 3 tools, and improve its prompt measured on 20 inputs." },
+        { "title": "Embeddings and RAG", "tasks": ["What embeddings capture and where they fail", "pgvector, HNSW and similarity search", "Chunking strategies", "Hybrid search (BM25 plus vectors) and reranking", "Anthropic's Contextual Retrieval post"], "challenge": "Index 1,000 documents in pgvector and build a hybrid search endpoint with reranking." },
+        { "title": "Evals", "tasks": ["Hamel Husain: 'Your AI product needs evals'", "Build a golden dataset of 50 examples", "Code-based checks vs LLM-as-judge", "Error analysis: read 100 traces and cluster failure modes", "Run evals in CI"], "challenge": "Write an eval suite for your RAG app and fix the top failure mode it finds." },
+        { "title": "Cost, latency and documents", "tasks": ["Prompt caching and when it pays off", "Batch processing and model routing", "Measuring time to first token and total latency", "PDF and image input, document extraction", "Citations"], "challenge": "Cut your app's cost per query by 50% without dropping eval scores. Document how." },
+        { "title": "Build: RAG app over real documents", "tasks": ["Pick a real document set (docs of a product you use)", "Ingestion pipeline", "Query API plus a minimal UI", "Wire evals into CI and add tracing", "Deploy it"], "challenge": "Get one other person to use it and collect their feedback." },
+        { "title": "Ship and write the case study", "tasks": ["Write the cost model per 1,000 queries", "Write 'how this scales to 1M queries a day'", "Demo video and README", "Case study: problem, approach, results, tradeoffs", "Review weak spots from the phase"], "challenge": "Phase capstone: publish the case study and share it on LinkedIn." }
+      ]
+    },
+    {
+      "id": "p3",
+      "title": "Agents and production AI",
+      "months": "Feb 1 to Mar 14",
+      "tag": "ai",
+      "gate": "An agent that integrates with a real third-party system, deployed, monitored and evaluated.",
+      "weeks": [
+        { "title": "Agents and workflow patterns", "tasks": ["Anthropic: Building effective agents", "Workflows vs agents, and when not to build an agent", "Prompt chaining, routing and parallelization", "Orchestrator-workers and evaluator-optimizer", "Lilian Weng: LLM Powered Autonomous Agents"], "challenge": "Write an agent loop from scratch in under 150 lines, no framework." },
+        { "title": "MCP and the Claude Agent SDK", "tasks": ["MCP concepts: tools, resources, prompts", "Build an MCP server for an API you use", "Claude Agent SDK quickstart", "Subagents, hooks and permissions", "Headless runs in CI"], "challenge": "Publish an MCP server on GitHub for a service with no official one." },
+        { "title": "Context, memory and security", "tasks": ["Anthropic: Effective context engineering for AI agents", "Compaction and long-term memory designs", "Prompt injection and the lethal trifecta (Simon Willison)", "Data boundaries, PII and least privilege", "Input and output guardrails"], "challenge": "Red-team your own agent: find 3 injection paths and fix them." },
+        { "title": "Observability, deployment and enterprise cloud", "tasks": ["Tracing agents with OpenTelemetry or Langfuse", "Queues and workers for long-running agents", "IAM, VPC and private networking basics", "Claude on AWS Bedrock and Google Cloud", "OAuth flows and webhooks for SaaS APIs"], "challenge": "Deploy your agent behind a queue with full tracing and a cost, latency and success dashboard." },
+        { "title": "Build: integration agent", "tasks": ["Pick a real workflow (support triage, sales research, ops reporting)", "Design the system and the evals first", "Build the core loop", "Integrate a real SaaS tool (Slack, Jira or Notion)", "Human approval steps and guardrails"], "challenge": "Demo it end to end to someone non-technical." },
+        { "title": "Harden, measure and write up", "tasks": ["Eval suite for the agent", "Run it on 100 real tasks and report the success rate honestly", "Monitoring and alerts", "Demo video", "Case study write-up"], "challenge": "Phase capstone: publish the agent case study." }
+      ]
+    },
+    {
+      "id": "p4",
+      "title": "The forward deployed role",
+      "months": "Mar 15 to Apr 25",
+      "tag": "fde",
+      "gate": "Two customer-style case studies on this site and 10 applications out.",
+      "weeks": [
+        { "title": "What FDEs do, and customer discovery", "tasks": ["Read 10 FDE job descriptions (Anthropic, OpenAI, Palantir, Scale, startups)", "Palantir's 'Dev versus Delta' post", "Rate yourself on the skills that repeat", "Asking good discovery questions and mapping a workflow", "Interview a friend about a painful workflow at their job"], "challenge": "Write your 'why FDE' story in 200 words." },
+        { "title": "Scoping, design docs and demos", "tasks": ["Pilot vs production: what to promise", "Write a 2-page pilot proposal with milestones and risks", "Write a solution design doc for engineers and executives", "Structure a 10-minute demo", "Handling security review questions"], "challenge": "Record a 10-minute demo of your phase 3 agent for a pretend customer." },
+        { "title": "Case study 1", "tasks": ["Pick an industry (insurance claims, legal intake, logistics)", "Research their workflows and data", "Design the solution and its evals", "Build the prototype", "Measure impact and write it up"], "challenge": "Publish case study 1." },
+        { "title": "Case study 2", "tasks": ["Pick a different industry", "Research workflows", "Design the solution and its evals", "Build the prototype", "Measure impact and write it up"], "challenge": "Publish case study 2." },
+        { "title": "Interview prep", "tasks": ["Design an enterprise RAG system out loud", "Design an LLM gateway with routing and caching", "Practical coding: build small things fast", "8 STAR stories: ambiguity, conflict, customer, failure", "Decomposition interviews (Palantir style)"], "challenge": "Do 2 mock interviews with a peer." },
+        { "title": "Applications and retrospective", "tasks": ["Polish resume around customer impact", "Update LinkedIn and this site's portfolio", "Send 10 applications", "Reach out to 5 people for referrals", "Write the 6-month retrospective"], "challenge": "10 applications sent and your retrospective published on this site." }
+      ]
+    }
+  ]
+}
