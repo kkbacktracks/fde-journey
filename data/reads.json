@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-10-28",
+    "title": "The October inflection point for vibe game development",
+    "url": "https://simonwillison.net/2026/Oct/28/vibe-game-development/",
+    "source": "Simon Willison",
+    "tag": "ai",
+    "why": "Top-ranked new post from Simon Willison.",
+    "pickedBy": "score"
+  },
+  {
     "date": "2026-10-27",
     "title": "Cross-request KV cache exposure in the GLM-5.3 Workers AI model, and our remediation with SGLang",
     "url": "https://blog.cloudflare.com/kv-cache-exposure-remediation/",
