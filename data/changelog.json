@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-28",
+  "updated": "2026-10-29",
   "claudeCode": [
     {
       "version": "2.1.312",
@@ -1287,6 +1287,19 @@
   ],
   "platform": [
     {
+      "date": "2026-10-29",
+      "items": [
+        "We’ve launched the [Usage and Cost Analytics API](https://platform.claude.com/docs/en/manage-claude/usage-cost-analytics-api) in beta with the `analytics-usage-cost-2026-08-24` beta header. Its `/v1/organizations/analytics/usage` and `/v1/organizations/analytics/cost` endpoints report token usage and cost for Claude Console and Claude Enterprise organizations. You can filter and group results by dimensions such as model, workspace, API key, and the user or service account behind each request.",
+        "The [Usage and Cost API](https://platform.claude.com/docs/en/manage-claude/usage-cost-api) is now a legacy API, and so are the `usage_report`, `cost_report`, `user_usage_report`, and `user_cost_report` endpoints of the [Claude Enterprise Analytics API](https://platform.claude.com/docs/en/manage-claude/analytics-api). All of them remain supported. To move an existing integration, see [Migrate from the Usage and Cost API](https://platform.claude.com/docs/en/manage-claude/usage-cost-analytics-api#migrate-from-usage-cost-api) or [Migrate from the Claude Enterprise usage and cost reports](https://platform.claude.com/docs/en/manage-claude/usage-cost-analytics-api#migrate-from-enterprise-analytics-reports)."
+      ]
+    },
+    {
+      "date": "2026-10-28",
+      "items": [
+        "We’ve raised the [maximum request size](https://platform.claude.com/docs/en/api/overview#request-size-limits) for the Messages API and the Token Counting API from 32 MB to 128 MB on the first-party Claude API."
+      ]
+    },
+    {
       "date": "2026-10-23",
       "items": [
         "The [Claude Tag API](https://platform.claude.com/docs/en/manage-claude/claude-tag-api) is available in beta for Claude Enterprise organizations with the `experimental-claude-tag-2026-10-21` beta header. Its `/v1/organizations/claude_tag/` endpoints read and change [Claude Tag](https://claude.com/docs/claude-tag/overview) settings on Slack channels and Slack workspaces, show which settings apply in a channel and where each comes from, and attach Access bundles. Call it with an Admin API key that your primary owner creates in claude.ai with the `read:claude_tag` or `write:claude_tag` scope. It is not available to Claude Platform (Claude Console) organizations."
@@ -1423,20 +1436,6 @@
       "items": [
         "For [cache diagnostics](https://platform.claude.com/docs/en/build-with-claude/cache-diagnostics), a response to a request that sends the `cache-diagnosis-2026-04-07` beta header now always includes the `diagnostics` field. The field is `null` when the request did not include the `diagnostics` object. Previously the field was omitted in that case.",
         "The [Compliance API](https://platform.claude.com/docs/en/manage-claude/compliance-api) local session endpoints now also return transcripts of Claude in Chrome sessions (`product_surface` value `claude_in_chrome`), in beta for Claude Enterprise organizations, with your existing Compliance Access Key and the `read:compliance_user_data` scope. See [Sessions on users’ machines](https://platform.claude.com/docs/en/manage-claude/compliance-sessions#retrieve-local-sessions)."
-      ]
-    },
-    {
-      "date": "2026-09-14",
-      "items": [
-        "The Messages API can now [compact a conversation on demand](https://platform.claude.com/docs/en/build-with-claude/compaction-on-demand) on the Claude API, in beta with the `compact-2026-09-04` beta header. Send the top-level `compaction` parameter, and the API returns a signed `compaction` block that summarizes the messages you sent. On later requests, send that block first, in place of those messages. You choose when to compact, the request can run in the background, and you can keep recent turns word for word after the summary. On models with preserved thinking, the thinking in those kept turns can stay valid.",
-        "With the `thinking-binding-controls-2026-08-01` beta header, the `input_transformations` response field gains a second entry type, `thinking_mismatch_allowed`. It names a thinking block that failed the prefix check on a request where the API doesn’t enforce that check: on Claude Fable 5.1, for example, a request from an account created before August 31, 2026, with `prefix_mismatch_behavior` unset. The block still reaches the model unchanged. Log these entries to find history edits in production traffic before you opt into enforcement. See [Set the mismatch behavior and read `input_transformations`](https://platform.claude.com/docs/en/build-with-claude/preserved-thinking#preserved-thinking-controls)."
-      ]
-    },
-    {
-      "date": "2026-09-10",
-      "items": [
-        "Claude Managed Agents permission policies now include `auto`: the server evaluates each agent or MCP tool call and runs it, denies it, or pauses for your approval. `agent.tool_use` and `agent.mcp_tool_use` events report how each call was evaluated in an `evaluation` field alongside `evaluated_permission`. See [Let the server evaluate each call with `auto`](https://platform.claude.com/docs/en/managed-agents/permission-policies#let-the-server-evaluate-each-call-with-auto).",
-        "Version 1.32.0 of the `ant` CLI adds `ant beta:sessions connect`, which attaches your terminal to a Claude Managed Agents session. You can follow the session live, send messages, and allow or deny tool calls that are waiting for approval. Pass `--web` to serve the Claude Console’s session viewer locally and open the session there instead. See [Connect to a Managed Agents session from your terminal](https://platform.claude.com/docs/en/cli-sdks-libraries/cli/sessions-connect)."
       ]
     }
   ]
