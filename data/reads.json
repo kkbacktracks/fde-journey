@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-11-01",
+    "title": "Cloudflare DDoS Threat Report 2026 Q3: More swarms, fewer giants",
+    "url": "https://blog.cloudflare.com/ddos-threat-report-2026-q3/",
+    "source": "Cloudflare Blog",
+    "tag": "system-design",
+    "why": "Top-ranked new post from Cloudflare Blog.",
+    "pickedBy": "score"
+  },
+  {
     "date": "2026-10-31",
     "title": "Cloudflare services for private origins is now generally available",
     "url": "https://blog.cloudflare.com/private-origins-public-to-private/",
