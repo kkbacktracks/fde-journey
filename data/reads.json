@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-11-02",
+    "title": "How we halved DNS build delay and cut memory use by 85%",
+    "url": "https://blog.cloudflare.com/dns-targeted-zone-builds/",
+    "source": "Cloudflare Blog",
+    "tag": "system-design",
+    "why": "Top-ranked new post from Cloudflare Blog.",
+    "pickedBy": "score"
+  },
+  {
     "date": "2026-11-01",
     "title": "Cloudflare DDoS Threat Report 2026 Q3: More swarms, fewer giants",
     "url": "https://blog.cloudflare.com/ddos-threat-report-2026-q3/",
