@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-11-03",
+    "title": "Qwen 3.8 27B on my laptop can interpret model weights, too",
+    "url": "https://simonwillison.net/2026/Nov/3/qwen-can-interpret-model-weights/",
+    "source": "Simon Willison",
+    "tag": "ai",
+    "why": "Top-ranked new post from Simon Willison.",
+    "pickedBy": "score"
+  },
+  {
     "date": "2026-11-02",
     "title": "How we halved DNS build delay and cut memory use by 85%",
     "url": "https://blog.cloudflare.com/dns-targeted-zone-builds/",
