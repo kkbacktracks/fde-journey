@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-11-05",
+    "title": "Agents aren’t humans (but they kinda are)",
+    "url": "https://blog.cloudflare.com/trusted-agent-delegation/",
+    "source": "Cloudflare Blog",
+    "tag": "system-design",
+    "why": "Top-ranked new post from Cloudflare Blog.",
+    "pickedBy": "score"
+  },
+  {
     "date": "2026-11-04",
     "title": "See the agents, set the terms: new visibility and control for personal agents",
     "url": "https://blog.cloudflare.com/personal-agents-visibility-control/",
