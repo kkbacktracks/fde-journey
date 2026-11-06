@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-11-06",
+    "title": "The post-quantum future of web privacy",
+    "url": "https://blog.cloudflare.com/vole-mole/",
+    "source": "Cloudflare Blog",
+    "tag": "system-design",
+    "why": "Top-ranked new post from Cloudflare Blog.",
+    "pickedBy": "score"
+  },
+  {
     "date": "2026-11-05",
     "title": "Agents aren’t humans (but they kinda are)",
     "url": "https://blog.cloudflare.com/trusted-agent-delegation/",
