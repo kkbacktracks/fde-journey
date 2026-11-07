@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-11-07",
+    "title": "Introducing Zero Wire, a hub for investigating critical Internet vulnerabilities",
+    "url": "https://blog.cloudflare.com/zero-wire/",
+    "source": "Cloudflare Blog",
+    "tag": "system-design",
+    "why": "Top-ranked new post from Cloudflare Blog.",
+    "pickedBy": "score"
+  },
+  {
     "date": "2026-11-06",
     "title": "The post-quantum future of web privacy",
     "url": "https://blog.cloudflare.com/vole-mole/",
