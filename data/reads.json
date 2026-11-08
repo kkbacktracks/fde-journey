@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-11-08",
+    "title": "The U.S. Census Bureau and “Super Intelligence”",
+    "url": "https://simonwillison.net/2026/Nov/2/census-bureau-super-intelligence/",
+    "source": "Simon Willison",
+    "tag": "ai",
+    "why": "Top-ranked new post from Simon Willison.",
+    "pickedBy": "score"
+  },
+  {
     "date": "2026-11-07",
     "title": "Introducing Zero Wire, a hub for investigating critical Internet vulnerabilities",
     "url": "https://blog.cloudflare.com/zero-wire/",
