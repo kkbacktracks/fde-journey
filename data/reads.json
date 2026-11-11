@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-11-11",
+    "title": "Hide your slop PR descriptions behind <details><summary>",
+    "url": "https://simonwillison.net/2026/Nov/9/details-summary/",
+    "source": "Simon Willison",
+    "tag": "ai",
+    "why": "Top-ranked new post from Simon Willison.",
+    "pickedBy": "score"
+  },
+  {
     "date": "2026-11-10",
     "title": "Locating the source of a mysterious beep with Claude",
     "url": "https://simonwillison.net/2026/Nov/9/mysterious-beeps/",
