@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-11-12",
+    "title": "Choosing QuePaxa, an unusual consensus algorithm",
+    "url": "https://blog.cloudflare.com/choosing-quepaxa/",
+    "source": "Cloudflare Blog",
+    "tag": "system-design",
+    "why": "Top-ranked new post from Cloudflare Blog.",
+    "pickedBy": "score"
+  },
+  {
     "date": "2026-11-11",
     "title": "Hide your slop PR descriptions behind <details><summary>",
     "url": "https://simonwillison.net/2026/Nov/9/details-summary/",
