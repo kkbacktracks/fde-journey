@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-11-13",
+    "title": "Kitesurf is now open source",
+    "url": "https://blog.cloudflare.com/kitesurf-open-source/",
+    "source": "Cloudflare Blog",
+    "tag": "system-design",
+    "why": "Top-ranked new post from Cloudflare Blog.",
+    "pickedBy": "score"
+  },
+  {
     "date": "2026-11-12",
     "title": "Choosing QuePaxa, an unusual consensus algorithm",
     "url": "https://blog.cloudflare.com/choosing-quepaxa/",
