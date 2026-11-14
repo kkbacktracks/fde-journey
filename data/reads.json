@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-11-14",
+    "title": "Adapting to AI penetration testing orchestrators: The Modern Security Model",
+    "url": "https://blog.cloudflare.com/adapting-to-ai-penetration-testing-orchestrators/",
+    "source": "Cloudflare Blog",
+    "tag": "system-design",
+    "why": "Top-ranked new post from Cloudflare Blog.",
+    "pickedBy": "score"
+  },
+  {
     "date": "2026-11-13",
     "title": "Kitesurf is now open source",
     "url": "https://blog.cloudflare.com/kitesurf-open-source/",
