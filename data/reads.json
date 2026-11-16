@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-11-16",
+    "title": "Launching the Vite Ecosystem Fund",
+    "url": "https://blog.cloudflare.com/launching-vite-ecosystem-fund/",
+    "source": "Cloudflare Blog",
+    "tag": "system-design",
+    "why": "Top-ranked new post from Cloudflare Blog.",
+    "pickedBy": "score"
+  },
+  {
     "date": "2026-11-15",
     "title": "Introducing Spend Management: Spending limits and alerts for Cloudflare",
     "url": "https://blog.cloudflare.com/spend-management/",
