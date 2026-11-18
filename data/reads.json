@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-11-18",
+    "title": "How Cloudflare WAF helps protect against Java4Shell (CVE-2026-114938)",
+    "url": "https://blog.cloudflare.com/java4shell-waf-protection/",
+    "source": "Cloudflare Blog",
+    "tag": "system-design",
+    "why": "Top-ranked new post from Cloudflare Blog.",
+    "pickedBy": "score"
+  },
+  {
     "date": "2026-11-17",
     "title": "Engineering AI Discover",
     "url": "https://netflixtechblog.com/engineering-ai-discover-e244944cdc38?source=rss----2615bd06b42e---4",
