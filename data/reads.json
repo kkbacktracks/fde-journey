@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-11-19",
+    "title": "Internet traffic and attacks during the 2026 U.S. midterm elections",
+    "url": "https://blog.cloudflare.com/internet-traffic-2026-us-election/",
+    "source": "Cloudflare Blog",
+    "tag": "system-design",
+    "why": "Top-ranked new post from Cloudflare Blog.",
+    "pickedBy": "score"
+  },
+  {
     "date": "2026-11-18",
     "title": "How Cloudflare WAF helps protect against Java4Shell (CVE-2026-114938)",
     "url": "https://blog.cloudflare.com/java4shell-waf-protection/",
