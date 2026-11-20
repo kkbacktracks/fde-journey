@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-11-20",
+    "title": "How Cloudflare WAF protects against ruby2shell (CVE-2026-132825)",
+    "url": "https://blog.cloudflare.com/ruby2shell-waf-protection/",
+    "source": "Cloudflare Blog",
+    "tag": "system-design",
+    "why": "Top-ranked new post from Cloudflare Blog.",
+    "pickedBy": "score"
+  },
+  {
     "date": "2026-11-19",
     "title": "Internet traffic and attacks during the 2026 U.S. midterm elections",
     "url": "https://blog.cloudflare.com/internet-traffic-2026-us-election/",
