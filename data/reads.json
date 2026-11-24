@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-11-23",
+    "title": "Probing DNS at Cloudflare",
+    "url": "https://blog.cloudflare.com/probing-dns-at-cloudflare/",
+    "source": "Cloudflare Blog",
+    "tag": "system-design",
+    "why": "Top-ranked new post from Cloudflare Blog.",
+    "pickedBy": "score"
+  },
+  {
     "date": "2026-11-22",
     "title": "How Cloudflare WAF helps protect against phpAfterShell and other critical PHP flaws",
     "url": "https://blog.cloudflare.com/phpaftershell-waf-protection/",
