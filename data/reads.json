@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-11-24",
+    "title": "Three LLM inflection points in twelve months",
+    "url": "https://simonwillison.net/2026/Nov/24/llm-inflection-points/",
+    "source": "Simon Willison",
+    "tag": "ai",
+    "why": "Top-ranked new post from Simon Willison.",
+    "pickedBy": "score"
+  },
+  {
     "date": "2026-11-23",
     "title": "Probing DNS at Cloudflare",
     "url": "https://blog.cloudflare.com/probing-dns-at-cloudflare/",
