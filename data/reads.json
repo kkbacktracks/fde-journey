@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-11-25",
+    "title": "Introducing Search for Agents",
+    "url": "https://blog.cloudflare.com/search-for-agents/",
+    "source": "Cloudflare Blog",
+    "tag": "system-design",
+    "why": "Top-ranked new post from Cloudflare Blog.",
+    "pickedBy": "score"
+  },
+  {
     "date": "2026-11-24",
     "title": "Three LLM inflection points in twelve months",
     "url": "https://simonwillison.net/2026/Nov/24/llm-inflection-points/",
