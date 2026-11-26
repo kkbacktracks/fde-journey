@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-11-26",
+    "title": "Ladybird's first alpha release",
+    "url": "https://simonwillison.net/2026/Nov/23/ladybird/",
+    "source": "Simon Willison",
+    "tag": "ai",
+    "why": "Top-ranked new post from Simon Willison.",
+    "pickedBy": "score"
+  },
+  {
     "date": "2026-11-25",
     "title": "Introducing Search for Agents",
     "url": "https://blog.cloudflare.com/search-for-agents/",
