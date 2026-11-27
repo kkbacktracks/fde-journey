@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-11-27",
+    "title": "nginx2root: Five new nginx vulnerabilities, and how Cloudflare protects origins from the worst of them",
+    "url": "https://blog.cloudflare.com/nginx2root/",
+    "source": "Cloudflare Blog",
+    "tag": "system-design",
+    "why": "Top-ranked new post from Cloudflare Blog.",
+    "pickedBy": "score"
+  },
+  {
     "date": "2026-11-26",
     "title": "Ladybird's first alpha release",
     "url": "https://simonwillison.net/2026/Nov/23/ladybird/",
